@@ -1,0 +1,67 @@
+[
+  {
+    "slug": "project-01",
+    "number": "01",
+    "title": "World Cup 2026",
+    "subtitle": "The whole tournament. In one place.",
+    "summary": "An automated tournament tracker, from the first kickoff to the final whistle.",
+    "category": "Automation / Web application",
+    "visibility": "Private project",
+    "tags": ["Automation", "Web app", "Live data", "Print-ready"],
+    "description": "A complete view of the World Cup: automatically updated scores, group standings, a knockout bracket, and detailed match views. Follow the action on screen or export a printable wall chart.",
+    "features": [
+      ["104 matches", "Automated score tracking across the tournament."],
+      ["One complete view", "Group standings and a bracket that advances as results arrive."],
+      ["Every match, closer", "Event timelines, statistics, momentum, and lineups."],
+      ["On screen. On paper.", "Responsive views and printable A3 charts."]
+    ],
+    "screenshots": [
+      {"src": "assets/worldcup/wall-chart.png", "alt": "World Cup tracker group standings screen", "caption": "01 / Tournament overview"},
+      {"src": "assets/worldcup/knockout.png", "alt": "World Cup tracker knockout bracket screen", "caption": "02 / The path to the final"},
+      {"src": "assets/worldcup/match-thread.png", "alt": "World Cup tracker match detail and momentum screen", "caption": "03 / A closer look at the match"}
+    ],
+    "note": "Product screenshots from the project repository; displayed scores are part of the captured interface.",
+    "repository": null,
+    "demo": null
+  },
+  {
+    "slug": "project-02",
+    "number": "02",
+    "title": "RayCast",
+    "subtitle": "Your screen. Anywhere.",
+    "summary": "Cast local videos, browser tabs, or your whole screen to the TV, all from one app.",
+    "category": "Application / Media casting",
+    "visibility": "Personal project",
+    "tags": ["Chromecast", "Local-first", "Media library", "Theming"],
+    "description": "RayCast brings your media to the big screen. Choose a Chromecast on your network, then cast from your own video library, a browser tab, or your entire screen. It runs on your computer, so your media stays local.",
+    "features": [
+      ["Three ways to cast", "Local media, a browser tab, or your whole screen."],
+      ["Your library, organised", "Browse shows and movies, search and sort, and see what you watched recently."],
+      ["Stays on your computer", "Runs on your computer, so your media stays local."],
+      ["Five themes", "Mint, Aurora, Ember, Volt, and Blossom."]
+    ],
+    "screenshots": [
+      {"src": "assets/raycast/RAYCAST.png", "alt": "RayCast local media library with Chromecast destination, video list, and player controls", "caption": "01 / The local media library"},
+      {"src": "assets/raycast/raycast_themes.png", "alt": "RayCast web cast screen shown in five colour themes: Mint, Aurora, Ember, Volt, and Blossom", "caption": "02 / Five themes, one experience"}
+    ],
+    "note": null,
+    "repository": null,
+    "demo": null
+  },
+  {
+    "slug": "project-03",
+    "number": "03",
+    "title": "Something on the horizon",
+    "subtitle": "Another idea, brought to life.",
+    "summary": "Another project, ready for its moment.",
+    "category": "Project 03",
+    "visibility": "Coming soon",
+    "tags": [],
+    "description": "More of my work will be shared here soon.",
+    "features": [],
+    "screenshots": [],
+    "note": null,
+    "repository": null,
+    "demo": null
+  }
+]

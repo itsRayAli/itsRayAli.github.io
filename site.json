@@ -1,0 +1,18 @@
+{
+  "name": "Ray Ali",
+  "url": "https://itsrayali.github.io",
+  "basePath": "/",
+  "title": "Ray Ali — Cloud, Applications & Automation",
+  "tagline": "Cloud · Apps · Automation",
+  "status": "Open to new projects",
+  "email": "rehali1992@gmail.com",
+  "github": "https://github.com/itsRayAli",
+  "intro": "I bring ideas to life through cloud architecture, application development, and automation — with the power of AI.",
+  "about": "I’m Ray. I turn ideas into useful digital experiences, connecting the possibilities of AI with cloud architecture, application development, and automation. My projects are a place to explore what’s possible and put those ideas to work.",
+  "rotatingWords": ["reality.", "the cloud.", "apps.", "automation.", "reality."],
+  "services": [
+    {"title":"Cloud Architecture","icon":"cloud","description":"A cloud foundation shaped around your idea. Architecture and infrastructure that support your application today and give it room to grow."},
+    {"title":"Application Development","icon":"code","description":"Bring a concept to life as a usable application. From the first screen to the working product, with AI helping move ideas forward."},
+    {"title":"Automation","icon":"flow","description":"Make repetitive work happen automatically. Connect tools, streamline workflows, and turn manual steps into systems that work for you."}
+  ]
+}

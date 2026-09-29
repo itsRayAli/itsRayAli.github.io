@@ -1,0 +1,46 @@
+# Ray Ali — portfolio
+
+A hand-built static portfolio for GitHub Pages: Home, About, Services, Projects, Contact, a page per project, and a 404 page. Dark indigo and coral, inspired by [sanidhyy/modern-portfolio](https://github.com/sanidhyy/modern-portfolio) (right-hand dock, particles, rotating badge), with original layout and styling. No framework, no npm install.
+
+## Preview and edit
+
+```sh
+python3 scripts/build.py
+python3 -m http.server 8000 --bind 127.0.0.1   # open http://127.0.0.1:8000/
+```
+
+- `site.json`: name, title, header tagline and status pill, bio, email, GitHub, services, and the hero's rotating words.
+- `projects.json`: one entry per project. Re-run the build after edits.
+- `assets/style.css` and `assets/site.js`: design and progressive enhancements (header, scroll reveal, rotating headline, particle canvas, motion toggle, contact form). All pages work without JavaScript.
+
+## Adding a project
+
+Put screenshots in `assets/<project>/` and add an entry to `projects.json`:
+
+```json
+{
+  "slug": "project-04", "number": "04",
+  "title": "…", "subtitle": "…", "summary": "…", "description": "…",
+  "category": "Application / …", "visibility": "Private project",
+  "tags": ["…"],
+  "features": [["Heading", "One-line detail."]],
+  "screenshots": [{"src": "assets/<project>/shot.png", "alt": "…", "caption": "01 / …"}],
+  "note": null, "repository": null, "demo": null
+}
+```
+
+Projects with screenshots become full-width feature cards that alternate sides. The first screenshot is the card cover (cropped to 16:10 from the top) and the framed hero image on the project page. Entries with no screenshots render as "coming soon" placeholders. Set `repository` or `demo` to a URL to show those buttons.
+
+## GitHub Pages
+
+`.github/workflows/pages.yml` builds the site and deploys only the public folders. The source PNG portraits are excluded from the deploy. Only the optimised JPEG is served.
+
+1. Create a repository named `itsRayAli.github.io` so the site serves at https://itsrayali.github.io/.
+2. Push to `main`.
+3. Under Settings → Pages, set Source to **GitHub Actions**.
+
+For a repository subpath (e.g. `/portfolio/`), set `basePath` in `site.json` to `/portfolio/` so `404.html` and social-preview URLs resolve. All other links are relative.
+
+## Assets
+
+`assets/ray-portrait-noir.jpg` is a compressed copy of the AI-generated portrait `ray-portrait-noir.png` (provenance in `docs/portrait-noir-generation.md`). World Cup and RayCast screenshots were supplied by Ray. Google Fonts (Manrope, DM Sans) load from Google, with system fallbacks.
