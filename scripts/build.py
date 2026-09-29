@@ -159,7 +159,10 @@ def footer(prefix):
 
 # --- Reusable sections --------------------------------------------------------
 def cover_of(p):
-    """Return (image, is_screenshot) for a project's cover, or (None, False) if it has none."""
+    """Return (image, is_screenshot) for a project's card cover, or (None, False) if it has none.
+    A dedicated `cover` wins; otherwise the first screenshot, then the `art` illustration."""
+    if p.get('cover'):
+        return p['cover'], False
     if p['screenshots']:
         return p['screenshots'][0], True
     if p.get('art'):

@@ -3,73 +3,163 @@
     "slug": "raycast",
     "number": "01",
     "title": "RayCast",
-    "subtitle": "Your screen. Anywhere.",
-    "summary": "Cast local videos, browser tabs, or your whole screen to the TV, all from one app.",
-    "category": "Application / Media casting",
+    "subtitle": "Your media, organised. On any screen.",
+    "summary": "A complete media hub: organise your library, build subtitles, and cast to a TV, another browser, or any screen, with your phone as the remote.",
+    "category": "Application / Media hub",
     "visibility": "Personal project",
-    "tags": ["Chromecast", "Local-first", "Media library", "Theming"],
-    "description": "RayCast brings your media to the big screen. Choose a Chromecast on your network, then cast from your own video library, a browser tab, or your entire screen. It runs on your computer, so your media stays local.",
+    "tags": [
+      "Media library",
+      "Chromecast",
+      "Subtitles",
+      "Companion app",
+      "Local-first"
+    ],
+    "description": "RayCast started as a way to get media onto the big screen and grew into a full media hub. It organises your local library into shows and movies, builds subtitles for your videos, and casts to a Chromecast, a browser tab, or your whole screen. It can also turn any other browser into a cast screen, and a phone companion app puts the controls in your hand. It all runs on your computer, so your media stays local.",
     "features": [
-      ["Three ways to cast", "Local media, a browser tab, or your whole screen."],
-      ["Your library, organised", "Browse shows and movies, search and sort, and see what you watched recently."],
-      ["Stays on your computer", "Runs on your computer, so your media stays local."],
-      ["Five themes", "Mint, Aurora, Ember, Volt, and Blossom."]
+      [
+        "A full media library",
+        "Shows and movies, organised with thumbnails, search, sorting, and recently watched."
+      ],
+      [
+        "Cast anywhere",
+        "Send to a Chromecast, cast a browser tab, or share your whole screen."
+      ],
+      [
+        "Any browser, a new screen",
+        "Generate an external screen and cast to another browser, on any device."
+      ],
+      [
+        "Subtitles, built in",
+        "Build subtitles for your videos and bring them along to the big screen."
+      ],
+      [
+        "Your phone, the remote",
+        "A companion app to browse your library and control playback from your phone."
+      ],
+      [
+        "Local and personal",
+        "Runs on your computer, so your media stays local. Pick from five themes."
+      ]
     ],
     "screenshots": [
-      {"src": "assets/raycast/RAYCAST.png", "alt": "RayCast local media library with Chromecast destination, video list, and player controls", "caption": "01 / The local media library"},
-      {"src": "assets/raycast/raycast_themes.png", "alt": "RayCast web cast screen shown in five colour themes: Mint, Aurora, Ember, Volt, and Blossom", "caption": "02 / Five themes, one experience"}
+      {
+        "src": "assets/raycast/RAYCAST.png",
+        "alt": "RayCast local media library with Chromecast destination, video list, and player controls",
+        "caption": "01 / The local media library"
+      },
+      {
+        "src": "assets/raycast/raycast_themes.png",
+        "alt": "RayCast web cast screen shown in five colour themes: Mint, Aurora, Ember, Volt, and Blossom",
+        "caption": "02 / Five themes, one experience"
+      }
     ],
     "art": null,
     "note": null,
     "repository": null,
-    "demo": null
-  },
-  {
-    "slug": "world-cup-2026",
-    "number": "02",
-    "title": "World Cup 2026",
-    "subtitle": "The whole tournament. In one place.",
-    "summary": "An automated tournament tracker, from the first kickoff to the final whistle.",
-    "category": "Automation / Web application",
-    "visibility": "Private project",
-    "tags": ["Automation", "Web app", "Live data", "Print-ready"],
-    "description": "A complete view of the World Cup: automatically updated scores, group standings, a knockout bracket, and detailed match views. Follow the action on screen or export a printable wall chart.",
-    "features": [
-      ["104 matches", "Automated score tracking across the tournament."],
-      ["One complete view", "Group standings and a bracket that advances as results arrive."],
-      ["Every match, closer", "Event timelines, statistics, momentum, and lineups."],
-      ["On screen. On paper.", "Responsive views and printable A3 charts."]
-    ],
-    "screenshots": [
-      {"src": "assets/worldcup/wall-chart.png", "alt": "World Cup tracker group standings screen", "caption": "01 / Tournament overview"},
-      {"src": "assets/worldcup/knockout.png", "alt": "World Cup tracker knockout bracket screen", "caption": "02 / The path to the final"},
-      {"src": "assets/worldcup/match-thread.png", "alt": "World Cup tracker match detail and momentum screen", "caption": "03 / A closer look at the match"}
-    ],
-    "art": null,
-    "note": "Product screenshots from the project repository; displayed scores are part of the captured interface.",
-    "repository": null,
-    "demo": null
+    "demo": null,
+    "cover": null
   },
   {
     "slug": "edgewise",
-    "number": "03",
+    "number": "02",
     "title": "Edgewise",
     "subtitle": "Where the markets disagree.",
     "summary": "An on-demand research tool that lines up prediction-market odds across exchanges and shows where they don’t agree.",
     "category": "Research tool / Market data",
     "visibility": "Private project",
-    "tags": ["Market research", "Data analysis", "Local-first", "Local AI"],
+    "tags": [
+      "Market research",
+      "Data analysis",
+      "Local-first",
+      "Local AI"
+    ],
     "description": "The same question can carry different odds on different prediction markets. Edgewise puts those prices side by side, highlights meaningful gaps, and explains every signal it raises. It only runs when you ask, keeps its data on your own machine, and never places a trade. It’s a research tool, not a trading bot.",
     "features": [
-      ["Odds, side by side", "One row per prediction, with each exchange’s price next to the others."],
-      ["Signals that explain themselves", "Every flag shows its prices, volume, and exactly why it qualified."],
-      ["Only when you ask", "No background scanning. Every query is bounded, cancellable, and timestamped."],
-      ["Test it on paper", "A virtual portfolio follows signals without real money or real orders."]
+      [
+        "Odds, side by side",
+        "One row per prediction, with each exchange’s price next to the others."
+      ],
+      [
+        "Signals that explain themselves",
+        "Every flag shows its prices, volume, and exactly why it qualified."
+      ],
+      [
+        "Only when you ask",
+        "No background scanning. Every query is bounded, cancellable, and timestamped."
+      ],
+      [
+        "Test it on paper",
+        "A virtual portfolio follows signals without real money or real orders."
+      ]
     ],
     "screenshots": [],
-    "art": {"src": "assets/edgewise/edgewise-illustration.svg", "alt": "Illustration of Edgewise comparing one prediction's odds across three exchanges, with the price gap highlighted, a signal card, and a paper portfolio", "caption": "An illustrated look at Edgewise"},
+    "art": {
+      "src": "assets/edgewise/edgewise-illustration.svg",
+      "alt": "Illustration of Edgewise comparing one prediction's odds across three exchanges, with the price gap highlighted, a signal card, and a paper portfolio",
+      "caption": "An illustrated look at Edgewise"
+    },
     "note": "Edgewise is private. This illustration represents the experience and is not a product screenshot.",
     "repository": null,
-    "demo": null
+    "demo": null,
+    "cover": null
+  },
+  {
+    "slug": "world-cup-2026",
+    "number": "03",
+    "title": "World Cup 2026",
+    "subtitle": "The whole tournament. In one place.",
+    "summary": "An automated tournament tracker, from the first kickoff to the final whistle.",
+    "category": "Automation / Web application",
+    "visibility": "Private project",
+    "tags": [
+      "Automation",
+      "Web app",
+      "Live data",
+      "Print-ready"
+    ],
+    "description": "A complete view of the World Cup: automatically updated scores, group standings, a knockout bracket, and detailed match views. Follow the action on screen or export a printable wall chart.",
+    "features": [
+      [
+        "104 matches",
+        "Automated score tracking across the tournament."
+      ],
+      [
+        "One complete view",
+        "Group standings and a bracket that advances as results arrive."
+      ],
+      [
+        "Every match, closer",
+        "Event timelines, statistics, momentum, and lineups."
+      ],
+      [
+        "On screen. On paper.",
+        "Responsive views and printable A3 charts."
+      ]
+    ],
+    "screenshots": [
+      {
+        "src": "assets/worldcup/wall-chart.png",
+        "alt": "World Cup tracker group standings screen",
+        "caption": "01 / Tournament overview"
+      },
+      {
+        "src": "assets/worldcup/knockout.png",
+        "alt": "World Cup tracker knockout bracket screen",
+        "caption": "02 / The path to the final"
+      },
+      {
+        "src": "assets/worldcup/match-thread.png",
+        "alt": "World Cup tracker match detail and momentum screen",
+        "caption": "03 / A closer look at the match"
+      }
+    ],
+    "art": null,
+    "note": "Product screenshots from the project repository; displayed scores are part of the captured interface.",
+    "repository": null,
+    "demo": null,
+    "cover": {
+      "src": "assets/worldcup/cover.svg",
+      "alt": "World Cup 2026 cover: title with 48 teams, 104 matches and 12 groups, a knockout bracket leading to the final, and a match momentum chart"
+    }
   }
 ]

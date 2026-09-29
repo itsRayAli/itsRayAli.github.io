@@ -25,10 +25,12 @@ Put screenshots in `assets/<project>/` and add an entry to `projects.json`:
   "tags": ["…"],
   "features": [["Heading", "One-line detail."]],
   "screenshots": [{"src": "assets/<project>/shot.png", "alt": "…", "caption": "01 / …"}],
-  "art": null,
+  "art": null, "cover": null,
   "note": null, "repository": null, "demo": null
 }
 ```
+
+`cover` (`{"src", "alt"}`) sets the image on the project's card when a screenshot looks too busy there. World Cup uses `assets/worldcup/cover.svg`. The project page still leads with the real screenshots.
 
 The slug becomes the URL (`/projects/my-project/`). Order in the file is the order on the site. Projects with screenshots become full-width feature cards that alternate sides. The first screenshot is the card cover (cropped to 16:10 from the top) and the framed hero image on the project page. With no screenshots, set `art` to an illustration (`{"src", "alt", "caption"}`) instead, as Edgewise does. Entries with neither render as "coming soon" placeholders. Set `repository` or `demo` to a URL to show those buttons. The build deletes pages for slugs that no longer exist.
 

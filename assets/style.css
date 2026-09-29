@@ -248,7 +248,9 @@ html:not(.js) .motion-toggle { display: none; }
   display: block;
   -webkit-mask-image: linear-gradient(to bottom, #000 84%, transparent);
   mask-image: linear-gradient(to bottom, #000 84%, transparent); }
-.rings { position: absolute; inset: 0; z-index: -1; display: grid; place-items: center; }
+/* overflow: hidden because a rotating square's bounding box grows, which could
+   push past the viewport on phones and allow sideways scrolling. */
+.rings { position: absolute; inset: 0; z-index: -1; display: grid; place-items: center; overflow: hidden; }
 .rings span { position: absolute; top: 14%; aspect-ratio: 1; border-radius: 50%; border: 1px dashed var(--ring); animation: spin 60s linear infinite; }
 .rings span:nth-child(1) { width: 78%; }
 .rings span:nth-child(2) { width: 100%; top: 4%; border-style: solid; border-color: var(--ring-faint); animation-direction: reverse; animation-duration: 90s; }
@@ -409,6 +411,8 @@ textarea { resize: vertical; }
 .showcase-shot figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; margin-top: .9rem; font-size: .82rem; color: var(--muted); }
 .showcase-shot figcaption span { color: var(--ink); }
 .feature-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid var(--line); }
+/* Five or six features read better as rows of three than as 4 + 2. */
+.feature-grid:has(> :nth-child(5)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .feature-grid > div { padding: 1.5rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--glass); }
 .feature-grid h2 { font-size: 1.1rem; letter-spacing: -.02em; }
 .feature-grid h2::before { content: ''; display: block; width: 24px; height: 2px; margin-bottom: 1rem; border-radius: 2px; background: var(--grad); }
