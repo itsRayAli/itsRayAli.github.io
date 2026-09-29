@@ -15,6 +15,7 @@ site = json.loads((ROOT / 'site.json').read_text())
 projects = json.loads((ROOT / 'projects.json').read_text())
 YEAR = date.today().year
 PORTRAIT = 'assets/ray-portrait-noir.jpg'
+PORTRAIT_LIGHT = 'assets/ray-portrait-light.webp'  # transparent cutout, see scripts/portrait-cutout.swift
 BASE_URL = site['url'].rstrip('/') + '/' + site.get('basePath', '/').strip('/')
 BASE_URL = BASE_URL.rstrip('/') + '/'
 
@@ -180,7 +181,9 @@ def portrait(prefix, variant='hero'):
     chips = ''.join(f'<span class="chip chip-{i}" aria-hidden="true">{icon(k)}{label}</span>'
                     for i, (k, label) in enumerate([('cloud', 'Cloud'), ('code', 'Apps'), ('flow', 'Automation')]))
     return (f'<div class="portrait portrait-{variant}"><div class="rings" aria-hidden="true"><span></span><span></span></div>'
-            f'<img src="{prefix}{PORTRAIT}" alt="AI-generated portrait of Ray Ali standing with his arms crossed" width="1024" height="1536" fetchpriority="high">'
+            # One portrait per theme; CSS hides the other. Lazy loading means the hidden one isn't downloaded.
+            f'<img class="portrait-dark" src="{prefix}{PORTRAIT}" alt="AI-generated portrait of Ray Ali standing with his arms crossed" width="1024" height="1536" loading="lazy" fetchpriority="high">'
+            f'<img class="portrait-light" src="{prefix}{PORTRAIT_LIGHT}" alt="AI-generated portrait of Ray Ali standing with his arms crossed" width="1024" height="1536" loading="lazy" fetchpriority="high">'
             f'{chips}{badge}</div>')
 
 

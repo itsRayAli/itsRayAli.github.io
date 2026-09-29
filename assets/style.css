@@ -240,11 +240,14 @@ html:not(.js) .motion-toggle { display: none; }
   -webkit-mask-composite: source-in;
   mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent), linear-gradient(to bottom, transparent, #000 8%, #000 80%, transparent);
   mask-composite: intersect; }
-/* The portrait has a dark studio backdrop. In light mode, frame it in an arch
-   instead of fading it into the page, so the dark background looks intentional. */
-:root[data-theme="light"] .portrait img {
-  -webkit-mask-image: none; mask-image: none;
-  clip-path: inset(2% 4% 0 4% round 999px 999px 28px 28px); }
+/* Light mode swaps in a transparent cutout of the same portrait, so it sits
+   directly on the page. Only the bottom fades. (No drop-shadow filter: combined
+   with the mask it tinted the image's whole rectangle into a visible box.) */
+.portrait .portrait-light, :root[data-theme="light"] .portrait .portrait-dark { display: none; }
+:root[data-theme="light"] .portrait .portrait-light {
+  display: block;
+  -webkit-mask-image: linear-gradient(to bottom, #000 84%, transparent);
+  mask-image: linear-gradient(to bottom, #000 84%, transparent); }
 .rings { position: absolute; inset: 0; z-index: -1; display: grid; place-items: center; }
 .rings span { position: absolute; top: 14%; aspect-ratio: 1; border-radius: 50%; border: 1px dashed var(--ring); animation: spin 60s linear infinite; }
 .rings span:nth-child(1) { width: 78%; }

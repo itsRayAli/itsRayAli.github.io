@@ -46,4 +46,10 @@ For a repository subpath (e.g. `/portfolio/`), set `basePath` in `site.json` to 
 
 ## Assets
 
-`assets/ray-portrait-noir.jpg` is a compressed copy of the AI-generated portrait `ray-portrait-noir.png` (provenance in `docs/portrait-noir-generation.md`). World Cup and RayCast screenshots were supplied by Ray. `assets/edgewise/edgewise-illustration.svg` is a hand-drawn illustration, not a product screenshot. Google Fonts (Manrope, DM Sans) load from Google, with system fallbacks.
+`assets/ray-portrait-noir.jpg` is a compressed copy of the AI-generated portrait `ray-portrait-noir.png` (provenance in `docs/portrait-noir-generation.md`). Light mode uses `assets/ray-portrait-light.webp`, a transparent cutout of the same portrait. To regenerate it after changing the portrait (macOS 14+):
+
+```sh
+swiftc -O scripts/portrait-cutout.swift -o /tmp/cutout
+/tmp/cutout assets/ray-portrait-noir.png /tmp/cut.png
+cwebp -q 84 -alpha_q 90 -m 6 /tmp/cut.png -o assets/ray-portrait-light.webp
+``` World Cup and RayCast screenshots were supplied by Ray. `assets/edgewise/edgewise-illustration.svg` is a hand-drawn illustration, not a product screenshot. Google Fonts (Manrope, DM Sans) load from Google, with system fallbacks.
