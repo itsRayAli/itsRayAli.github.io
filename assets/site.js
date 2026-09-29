@@ -3,6 +3,28 @@ const root = document.documentElement;
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const motionPaused = () => reduceMotion || root.classList.contains('motion-paused');
 
+// Theme: the <head> script already applied the saved or system theme.
+// The toggle saves an explicit choice; without one, follow OS changes live.
+const themeToggle = document.querySelector('[data-theme-toggle]');
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+const applyTheme = (theme) => {
+  root.dataset.theme = theme;
+  if (themeMeta) themeMeta.content = theme === 'light' ? '#faf8fd' : '#0e0c1d';
+  if (themeToggle) themeToggle.setAttribute('aria-label', `Switch to ${theme === 'light' ? 'dark' : 'light'} theme`);
+  root.dispatchEvent(new Event('themechange'));
+};
+applyTheme(root.dataset.theme === 'light' ? 'light' : 'dark');
+themeToggle?.addEventListener('click', () => {
+  const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+  try { localStorage.setItem('theme', next); } catch { /* private mode: choice lasts this page only */ }
+  applyTheme(next);
+});
+matchMedia('(prefers-color-scheme: light)').addEventListener('change', (event) => {
+  let saved = null;
+  try { saved = localStorage.getItem('theme'); } catch { /* ignore */ }
+  if (!saved) applyTheme(event.matches ? 'light' : 'dark');
+});
+
 // Header: switch to a solid glass bar once the page scrolls.
 const header = document.querySelector('[data-header]');
 if (header) {
@@ -52,6 +74,19 @@ if (canvas && canvas.getContext) {
   const hero = canvas.closest('[data-hero]') || document.body;
   const pointer = { x: -9999, y: -9999 };
   let width = 0, height = 0, points = [], frame = null, onScreen = true;
+  // Colours come from CSS custom properties so they follow the theme.
+  let colors = {};
+  const readColors = () => {
+    const css = getComputedStyle(root);
+    colors = {
+      line: css.getPropertyValue('--particle-line').trim(),
+      lineAlpha: parseFloat(css.getPropertyValue('--particle-line-alpha')) || 0.14,
+      dot: css.getPropertyValue('--particle-dot').trim(),
+      accent: css.getPropertyValue('--particle-accent').trim(),
+    };
+  };
+  readColors();
+  root.addEventListener('themechange', () => { readColors(); draw(); });
 
   const resize = () => {
     const dpr = Math.min(devicePixelRatio || 1, 2);
@@ -76,11 +111,11 @@ if (canvas && canvas.getContext) {
         const b = points[j];
         const d = Math.hypot(a.x - b.x, a.y - b.y);
         if (d < 120) {
-          ctx.strokeStyle = `rgba(190, 170, 255, ${0.14 * (1 - d / 120)})`;
+          ctx.strokeStyle = `rgba(${colors.line}, ${colors.lineAlpha * (1 - d / 120)})`;
           ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
         }
       }
-      ctx.fillStyle = i % 7 === 0 ? 'rgba(255, 101, 94, 0.8)' : 'rgba(230, 225, 255, 0.55)';
+      ctx.fillStyle = i % 7 === 0 ? colors.accent : colors.dot;
       ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2); ctx.fill();
     }
   };

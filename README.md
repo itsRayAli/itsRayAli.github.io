@@ -1,6 +1,6 @@
 # Ray Ali — portfolio
 
-A hand-built static portfolio for GitHub Pages: Home, About, Services, Projects, Contact, a page per project, and a 404 page. Dark indigo and coral, inspired by [sanidhyy/modern-portfolio](https://github.com/sanidhyy/modern-portfolio) (right-hand dock, particles, rotating badge), with original layout and styling. No framework, no npm install.
+A hand-built static portfolio for GitHub Pages: Home, About, Services, Projects, Contact, a page per project, and a 404 page. No framework, no npm install.
 
 ## Preview and edit
 
@@ -19,17 +19,20 @@ Put screenshots in `assets/<project>/` and add an entry to `projects.json`:
 
 ```json
 {
-  "slug": "project-04", "number": "04",
+  "slug": "my-project", "number": "04",
   "title": "…", "subtitle": "…", "summary": "…", "description": "…",
   "category": "Application / …", "visibility": "Private project",
   "tags": ["…"],
   "features": [["Heading", "One-line detail."]],
   "screenshots": [{"src": "assets/<project>/shot.png", "alt": "…", "caption": "01 / …"}],
+  "art": null,
   "note": null, "repository": null, "demo": null
 }
 ```
 
-Projects with screenshots become full-width feature cards that alternate sides. The first screenshot is the card cover (cropped to 16:10 from the top) and the framed hero image on the project page. Entries with no screenshots render as "coming soon" placeholders. Set `repository` or `demo` to a URL to show those buttons.
+The slug becomes the URL (`/projects/my-project/`). Order in the file is the order on the site. Projects with screenshots become full-width feature cards that alternate sides. The first screenshot is the card cover (cropped to 16:10 from the top) and the framed hero image on the project page. With no screenshots, set `art` to an illustration (`{"src", "alt", "caption"}`) instead, as Edgewise does. Entries with neither render as "coming soon" placeholders. Set `repository` or `demo` to a URL to show those buttons. The build deletes pages for slugs that no longer exist.
+
+The "See my work" pill in the homepage hero counts projects that have a screenshot or illustration.
 
 ## GitHub Pages
 
@@ -43,4 +46,4 @@ For a repository subpath (e.g. `/portfolio/`), set `basePath` in `site.json` to 
 
 ## Assets
 
-`assets/ray-portrait-noir.jpg` is a compressed copy of the AI-generated portrait `ray-portrait-noir.png` (provenance in `docs/portrait-noir-generation.md`). World Cup and RayCast screenshots were supplied by Ray. Google Fonts (Manrope, DM Sans) load from Google, with system fallbacks.
+`assets/ray-portrait-noir.jpg` is a compressed copy of the AI-generated portrait `ray-portrait-noir.png` (provenance in `docs/portrait-noir-generation.md`). World Cup and RayCast screenshots were supplied by Ray. `assets/edgewise/edgewise-illustration.svg` is a hand-drawn illustration, not a product screenshot. Google Fonts (Manrope, DM Sans) load from Google, with system fallbacks.

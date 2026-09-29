@@ -33,7 +33,15 @@ ICONS = {
     'cloud': '<path d="M6 19a5 5 0 1 1 0-10 7 7 0 0 1 13-1 5.5 5.5 0 0 1-1 11Z"/>',
     'code': '<path d="m8 5-6 7 6 7m8-14 6 7-6 7m-3-16-2 18"/>',
     'flow': '<rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M9 6h7a2 2 0 0 1 2 2v7M15 12l3 3 3-3M6 9v9h6"/>',
+    'sun': '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    'moon': '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/>',
 }
+
+# Runs in <head> before first paint so the saved or system theme applies without a flash.
+THEME_BOOT = ("<script>(function(){var d=document.documentElement,t;d.classList.add('js');"
+              "try{t=localStorage.getItem('theme')}catch(e){}"
+              "if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';"
+              "d.dataset.theme=t})()</script>")
 GITHUB_PATH = ('M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37'
                '-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96'
                '.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0'
@@ -42,10 +50,11 @@ GITHUB_PATH = ('M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.2
                'C23.5 5.65 18.35.5 12 .5Z')
 
 
-def icon(key):
+def icon(key, cls=''):
+    c = f' class="{cls}"' if cls else ''
     if key == 'github':
-        return f'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="{GITHUB_PATH}"/></svg>'
-    return ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" '
+        return f'<svg{c} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="{GITHUB_PATH}"/></svg>'
+    return (f'<svg{c} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" '
             'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICONS[key] + '</svg>')
 
 
@@ -105,7 +114,7 @@ def head(title, key, prefix, path, description=None, full_title=False):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="{prefix}assets/style.css">
-<script>document.documentElement.classList.add('js')</script>
+{THEME_BOOT}
 <script src="{prefix}assets/site.js" defer></script>
 </head>
 <body class="page-{key}">
@@ -116,6 +125,7 @@ def head(title, key, prefix, path, description=None, full_title=False):
     <a class="brand" href="{prefix}index.html" aria-label="{e(site['name'])}, home">{brand_mark('bm-head')}<span class="brand-text"><strong>{e(site['name'])}<span class="dot">.</span></strong><small>{e(site['tagline'])}</small></span></a>
     <p class="status"><span class="pulse" aria-hidden="true"></span>{e(site['status'])}</p>
     <div class="header-actions">
+      <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme">{icon('sun', 'icon-sun')}{icon('moon', 'icon-moon')}</button>
       <a class="icon-btn" href="{e(site['github'])}" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile (opens in a new tab)">{icon('github')}</a>
       <a class="icon-btn" href="mailto:{e(site['email'])}" aria-label="Email {e(site['name'])}">{icon('contact')}</a>
       <a class="button button-sm" href="{prefix}contact/">Let’s talk {arrow()}</a>
@@ -147,13 +157,26 @@ def footer(prefix):
 
 
 # --- Reusable sections --------------------------------------------------------
+def cover_of(p):
+    """Return (image, is_screenshot) for a project's cover, or (None, False) if it has none."""
+    if p['screenshots']:
+        return p['screenshots'][0], True
+    if p.get('art'):
+        return p['art'], False
+    return None, False
+
+
+def work_cta(prefix):
+    """Compact animated pill in the hero that links to the projects page."""
+    count = sum(1 for p in projects if cover_of(p)[0])
+    label = f'{count} project' + ('' if count == 1 else 's')
+    return (f'<a class="work-cta" href="{prefix}work/">'
+            f'<span class="work-cta-label"><small>{label}</small>See my work</span>'
+            f'<span class="work-cta-arrow" aria-hidden="true"><i>→</i><i>→</i></span></a>')
+
+
 def portrait(prefix, variant='hero'):
-    badge = ''
-    if variant == 'hero':
-        badge = (f'<a class="orbit-badge" href="{prefix}work/" aria-label="View my projects">'
-                 '<svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="badge-circle" d="M60 60m-45 0a45 45 0 1 1 90 0a45 45 0 1 1-90 0"/></defs>'
-                 '<text><textPath href="#badge-circle" textLength="280" lengthAdjust="spacing">VIEW PROJECTS • VIEW PROJECTS • </textPath></text></svg>'
-                 f'{arrow()}</a>')
+    badge = work_cta(prefix) if variant == 'hero' else ''
     chips = ''.join(f'<span class="chip chip-{i}" aria-hidden="true">{icon(k)}{label}</span>'
                     for i, (k, label) in enumerate([('cloud', 'Cloud'), ('code', 'Apps'), ('flow', 'Automation')]))
     return (f'<div class="portrait portrait-{variant}"><div class="rings" aria-hidden="true"><span></span><span></span></div>'
@@ -162,23 +185,25 @@ def portrait(prefix, variant='hero'):
 
 
 def cards(prefix=''):
-    """Projects with screenshots become full-width features that alternate sides;
+    """Projects with a cover become full-width features that alternate sides;
     placeholders sit two per row, and a lone final placeholder spans the row."""
     html = ''
     featured_count = 0
-    upcoming = [p for p in projects if not p['screenshots']]
+    upcoming = [p for p in projects if not cover_of(p)[0]]
     for p in projects:
-        live = bool(p['screenshots'])
+        img, is_shot = cover_of(p)
+        live = img is not None
         extra = ''
         if live:
             featured_count += 1
             extra = ' reverse' if featured_count % 2 == 0 else ''
         elif len(upcoming) % 2 and p is upcoming[-1]:
             extra = ' wide'
-        if live:
-            s = p['screenshots'][0]
+        if is_shot:
             cover = (f'<div class="window"><div class="window-bar" aria-hidden="true"><i></i><i></i><i></i></div>'
-                     f'<img src="{prefix}{e(s["src"])}" alt="{e(s["alt"])}" loading="lazy"></div>')
+                     f'<img src="{prefix}{e(img["src"])}" alt="{e(img["alt"])}" loading="lazy"></div>')
+        elif live:
+            cover = f'<img class="art" src="{prefix}{e(img["src"])}" alt="{e(img["alt"])}" loading="lazy">'
         else:
             cover = f'<div class="placeholder-cover" aria-hidden="true"><span>{e(p["number"])}</span></div>'
         html += (f'<a class="project-card reveal {"featured" if live else "upcoming"}{extra}" href="{prefix}projects/{e(p["slug"])}/">'
@@ -277,7 +302,7 @@ write('services/index.html', head('Services', 'services', '../', 'services/') + 
 write('work/index.html', head('Projects', 'work', '../', 'work/') + f'''<main id="main" class="page-main">
 {page_intro('Selected projects', 'Built to do<br><em>something useful.</em>', 'A collection of applications and automations. Take a look around.')}
 {cards('../')}
-<p class="collection-note">Some projects are private. Selected screenshots offer a look inside.</p>
+<p class="collection-note">Some projects are private. Selected screenshots and illustrations offer a look inside.</p>
 {cta('../')}
 </main>
 ''' + footer('../'))
@@ -307,6 +332,14 @@ write('contact/index.html', head('Contact', 'contact', '../', 'contact/') + f'''
 ''' + footer('../'))
 
 # --- Project pages ------------------------------------------------------------
+# Remove pages for projects that were renamed or deleted (generated folders only).
+slugs = {p['slug'] for p in projects}
+for old in (ROOT / 'projects').glob('*/'):
+    if old.name not in slugs and [f.name for f in old.iterdir()] == ['index.html']:
+        (old / 'index.html').unlink()
+        old.rmdir()
+        print(f'Removed stale page: projects/{old.name}/')
+
 for i, p in enumerate(projects):
     prefix = '../../'
     shots = p['screenshots']
@@ -320,7 +353,11 @@ for i, p in enumerate(projects):
         else:
             gallery += (f'<figure class="showcase-shot reveal">{link}{img}</a>'
                         f'<figcaption>{e(s["caption"])}<span>View full size {arrow()}</span></figcaption></figure>')
-    if not shots:
+    if not shots and p.get('art'):
+        a = p['art']
+        hero_shot = (f'<figure class="showcase-shot"><img class="art" src="{prefix}{e(a["src"])}" alt="{e(a["alt"])}" fetchpriority="high">'
+                     f'<figcaption>{e(a["caption"])}<span>Illustration</span></figcaption></figure>')
+    elif not shots:
         gallery = f'<div class="coming-project"><span>{e(p["number"])}</span><p>A new project is on its way.</p></div>'
     features = ''
     if p['features']:

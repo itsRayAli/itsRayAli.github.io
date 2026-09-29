@@ -1,7 +1,32 @@
 [
   {
-    "slug": "project-01",
+    "slug": "raycast",
     "number": "01",
+    "title": "RayCast",
+    "subtitle": "Your screen. Anywhere.",
+    "summary": "Cast local videos, browser tabs, or your whole screen to the TV, all from one app.",
+    "category": "Application / Media casting",
+    "visibility": "Personal project",
+    "tags": ["Chromecast", "Local-first", "Media library", "Theming"],
+    "description": "RayCast brings your media to the big screen. Choose a Chromecast on your network, then cast from your own video library, a browser tab, or your entire screen. It runs on your computer, so your media stays local.",
+    "features": [
+      ["Three ways to cast", "Local media, a browser tab, or your whole screen."],
+      ["Your library, organised", "Browse shows and movies, search and sort, and see what you watched recently."],
+      ["Stays on your computer", "Runs on your computer, so your media stays local."],
+      ["Five themes", "Mint, Aurora, Ember, Volt, and Blossom."]
+    ],
+    "screenshots": [
+      {"src": "assets/raycast/RAYCAST.png", "alt": "RayCast local media library with Chromecast destination, video list, and player controls", "caption": "01 / The local media library"},
+      {"src": "assets/raycast/raycast_themes.png", "alt": "RayCast web cast screen shown in five colour themes: Mint, Aurora, Ember, Volt, and Blossom", "caption": "02 / Five themes, one experience"}
+    ],
+    "art": null,
+    "note": null,
+    "repository": null,
+    "demo": null
+  },
+  {
+    "slug": "world-cup-2026",
+    "number": "02",
     "title": "World Cup 2026",
     "subtitle": "The whole tournament. In one place.",
     "summary": "An automated tournament tracker, from the first kickoff to the final whistle.",
@@ -20,47 +45,30 @@
       {"src": "assets/worldcup/knockout.png", "alt": "World Cup tracker knockout bracket screen", "caption": "02 / The path to the final"},
       {"src": "assets/worldcup/match-thread.png", "alt": "World Cup tracker match detail and momentum screen", "caption": "03 / A closer look at the match"}
     ],
+    "art": null,
     "note": "Product screenshots from the project repository; displayed scores are part of the captured interface.",
     "repository": null,
     "demo": null
   },
   {
-    "slug": "project-02",
-    "number": "02",
-    "title": "RayCast",
-    "subtitle": "Your screen. Anywhere.",
-    "summary": "Cast local videos, browser tabs, or your whole screen to the TV, all from one app.",
-    "category": "Application / Media casting",
-    "visibility": "Personal project",
-    "tags": ["Chromecast", "Local-first", "Media library", "Theming"],
-    "description": "RayCast brings your media to the big screen. Choose a Chromecast on your network, then cast from your own video library, a browser tab, or your entire screen. It runs on your computer, so your media stays local.",
-    "features": [
-      ["Three ways to cast", "Local media, a browser tab, or your whole screen."],
-      ["Your library, organised", "Browse shows and movies, search and sort, and see what you watched recently."],
-      ["Stays on your computer", "Runs on your computer, so your media stays local."],
-      ["Five themes", "Mint, Aurora, Ember, Volt, and Blossom."]
-    ],
-    "screenshots": [
-      {"src": "assets/raycast/RAYCAST.png", "alt": "RayCast local media library with Chromecast destination, video list, and player controls", "caption": "01 / The local media library"},
-      {"src": "assets/raycast/raycast_themes.png", "alt": "RayCast web cast screen shown in five colour themes: Mint, Aurora, Ember, Volt, and Blossom", "caption": "02 / Five themes, one experience"}
-    ],
-    "note": null,
-    "repository": null,
-    "demo": null
-  },
-  {
-    "slug": "project-03",
+    "slug": "edgewise",
     "number": "03",
-    "title": "Something on the horizon",
-    "subtitle": "Another idea, brought to life.",
-    "summary": "Another project, ready for its moment.",
-    "category": "Project 03",
-    "visibility": "Coming soon",
-    "tags": [],
-    "description": "More of my work will be shared here soon.",
-    "features": [],
+    "title": "Edgewise",
+    "subtitle": "Where the markets disagree.",
+    "summary": "An on-demand research tool that lines up prediction-market odds across exchanges and shows where they don’t agree.",
+    "category": "Research tool / Market data",
+    "visibility": "Private project",
+    "tags": ["Market research", "Data analysis", "Local-first", "Local AI"],
+    "description": "The same question can carry different odds on different prediction markets. Edgewise puts those prices side by side, highlights meaningful gaps, and explains every signal it raises. It only runs when you ask, keeps its data on your own machine, and never places a trade. It’s a research tool, not a trading bot.",
+    "features": [
+      ["Odds, side by side", "One row per prediction, with each exchange’s price next to the others."],
+      ["Signals that explain themselves", "Every flag shows its prices, volume, and exactly why it qualified."],
+      ["Only when you ask", "No background scanning. Every query is bounded, cancellable, and timestamped."],
+      ["Test it on paper", "A virtual portfolio follows signals without real money or real orders."]
+    ],
     "screenshots": [],
-    "note": null,
+    "art": {"src": "assets/edgewise/edgewise-illustration.svg", "alt": "Illustration of Edgewise comparing one prediction's odds across three exchanges, with the price gap highlighted, a signal card, and a paper portfolio", "caption": "An illustrated look at Edgewise"},
+    "note": "Edgewise is private. This illustration represents the experience and is not a product screenshot.",
     "repository": null,
     "demo": null
   }
