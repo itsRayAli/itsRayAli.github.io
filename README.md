@@ -38,6 +38,10 @@ The slug becomes the URL (`/projects/my-project/`). Order in the file is the ord
 
 The "See my work" pill in the homepage hero counts projects that have a screenshot or illustration.
 
+## Collections
+
+`groups.json` holds collections: several smaller projects presented on one page (for example Educational Technology at `/projects/edtech/`). Each project has a `title`, `tagline`, `category`, a short `summary`, and a flat `stack` list. Collections get a full-width card after the projects on the homepage and Projects page. Keep these to a brief overview; don't add internals.
+
 ## About page and tech stack
 
 Each project's `stack` is a list of layers (`{"layer", "note", "items": [...]}`) drawn on its page as a connected diagram. Every item must exist in `site.json` → `tech`, or the build stops with a message. The About page combines all project stacks into one grouped overview automatically.

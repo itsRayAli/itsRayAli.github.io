@@ -15,6 +15,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 site = json.loads((ROOT / 'site.json').read_text())
 projects = json.loads((ROOT / 'projects.json').read_text())
+# Collections: several smaller projects presented together on one page (e.g. EdTech).
+_groups_file = ROOT / 'groups.json'
+collections = json.loads(_groups_file.read_text()) if _groups_file.exists() else []
 YEAR = date.today().year
 PORTRAIT = 'assets/ray-portrait-noir.jpg'
 PORTRAIT_LIGHT = 'assets/ray-portrait-light.webp'  # transparent cutout, see scripts/portrait-cutout.swift
@@ -204,7 +207,7 @@ def cover_of(p):
 
 def work_cta(prefix):
     """Compact animated pill in the hero that links to the projects page."""
-    count = sum(1 for p in projects if cover_of(p)[0])
+    count = sum(1 for p in projects if cover_of(p)[0]) + sum(len(c['projects']) for c in collections)
     label = f'{count} project' + ('' if count == 1 else 's')
     return (f'<a class="work-cta" href="{prefix}work/">'
             f'<span class="work-cta-label"><small>{label}</small>See my work</span>'
@@ -249,7 +252,22 @@ def cards(prefix=''):
                  f'<p class="card-meta"><span>{e(p["category"])}</span><span class="pill">{e(p["visibility"])}</span></p>'
                  f'<h3>{e(p["title"])}</h3><p class="card-summary">{e(p["summary"])}</p>{tags(p.get("tags"))}'
                  f'<span class="card-action">{"Explore project" if live else "Preview space"} {arrow()}</span></div></a>')
+    for c in collections:
+        html += collection_card(prefix, c)
     return '<div class="project-grid">' + html + '</div>'
+
+
+def collection_card(prefix, c):
+    """Full-width card for a collection, listing its projects instead of a cover image."""
+    members = ''.join(f'<li><span class="member-num">{i + 1:02d}</span><strong>{e(m["title"])}</strong>'
+                      f'<span>{e(m["tagline"])}</span></li>' for i, m in enumerate(c['projects']))
+    n = len(c['projects'])
+    return (f'<a class="project-card collection-card reveal" href="{prefix}projects/{e(c["slug"])}/"><div class="card-copy">'
+            f'<p class="card-meta"><span>{e(c["category"])}</span><span class="pill">{n} project{"s" if n != 1 else ""}</span>'
+            f'<span class="pill">{e(c["visibility"])}</span></p>'
+            f'<h3>{e(c["title"])}</h3><p class="card-summary">{e(c["summary"])}</p>'
+            f'<ul class="collection-members">{members}</ul>'
+            f'<span class="card-action">Explore the collection {arrow()}</span></div></a>')
 
 
 def services(prefix='', level='h2'):
@@ -276,7 +294,7 @@ def tech_chip(name):
     """A technology as a brand-coloured monogram tile plus its name."""
     if name not in TECH:
         raise SystemExit(f'Unknown technology "{name}": add it to "tech" in site.json')
-    mono, color, _group = TECH[name]
+    mono, color = TECH[name][:2]
     r, g, b = (int(color[i:i + 2], 16) for i in (1, 3, 5))
     ink = '#10101a' if (0.299 * r + 0.587 * g + 0.114 * b) > 150 else '#ffffff'  # readable monogram on any brand colour
     return (f'<li class="tech" style="--c:{e(color)};--on:{ink}"><span class="tech-mark" aria-hidden="true">{e(mono)}</span>'
@@ -299,36 +317,26 @@ def stack_section(p):
 
 
 def stack_overview(prefix):
-    """About page: every technology used across the projects, grouped, with where it's used."""
-    used = {}
-    for p in projects:
-        for layer in p.get('stack') or []:
-            for t in layer['items']:
-                used.setdefault(t, [])
-                if p['title'] not in used[t]:
-                    used[t].append(p['title'])
-    if not used:
+    """About page: the headline tools only (site.json -> stackOverview), in a few simple groups.
+    The full, per-layer detail lives on each project page."""
+    groups = site.get('stackOverview') or []
+    if not groups:
         return ''
-    groups = ''
-    for key, label in site.get('techGroups', {}).items():
-        items = sorted((t for t in used if TECH[t][2] == key), key=lambda t: (-len(used[t]), t.lower()))
-        if not items:
-            continue
-        chips = ''
-        for t in items:
-            where = used[t]
-            badge = (f'<span class="tech-count" aria-hidden="true">×{len(where)}</span>' if len(where) > 1 else '')
-            chips += tech_chip(t).replace('</li>', f'{badge}<span class="sr-only">, used in {e(" and ".join(where))}</span></li>', 1) \
-                                 .replace('<li class="tech"', f'<li class="tech" title="Used in {e(" and ".join(where))}"', 1)
-        groups += (f'<li class="stack-layer reveal"><div class="stack-label"><div><h3>{e(label)}</h3>'
-                   f'<p>{len(items)} tool{"s" if len(items) != 1 else ""}</p></div></div>'
-                   f'<ul class="tech-list" aria-label="{e(label)}">{chips}</ul></li>')
-    names = [p['title'] for p in projects if p.get('stack')]
+    used = {t for p in projects for layer in p.get('stack') or [] for t in layer['items']}
+    used |= {t for c in collections for m in c['projects'] for t in m.get('stack', [])}
+    rows = ''
+    for g in groups:
+        for t in g['items']:
+            if t not in used:
+                raise SystemExit(f'stackOverview lists "{t}", which no project uses')
+        chips = ''.join(tech_chip(t) for t in g['items'])
+        rows += (f'<li class="stack-layer reveal"><div class="stack-label"><div><h3>{e(g["group"])}</h3></div></div>'
+                 f'<ul class="tech-list" aria-label="{e(g["group"])}">{chips}</ul></li>')
     return (f'<section class="section about-section" aria-labelledby="tools-title"><div class="section-heading"><div>'
             f'<p class="eyebrow">Tools I build with</p><h2 id="tools-title">A stack that <em>ships.</em></h2>'
-            f'<p class="section-lead">Everything here is in use in {e(", ".join(names[:-1]) + " and " + names[-1] if len(names) > 1 else names[0])}.</p></div>'
+            f'<p class="section-lead">The core of what I use. Each project page shows its full stack.</p></div>'
             f'<a class="text-link" href="{prefix}work/">See the projects {arrow()}</a></div>'
-            f'<ul class="stack tech-groups">{groups}</ul></section>')
+            f'<ul class="stack tech-groups">{rows}</ul></section>')
 
 
 def principles_section():
@@ -478,13 +486,14 @@ write('contact/index.html', head('Contact', 'contact', '../', 'contact/') + f'''
 
 # --- Project pages ------------------------------------------------------------
 # Remove pages for projects that were renamed or deleted (generated folders only).
-slugs = {p['slug'] for p in projects}
+slugs = {p['slug'] for p in projects} | {c['slug'] for c in collections}
 for old in (ROOT / 'projects').glob('*/'):
     if old.name not in slugs and [f.name for f in old.iterdir()] == ['index.html']:
         (old / 'index.html').unlink()
         old.rmdir()
         print(f'Removed stale page: projects/{old.name}/')
 
+sequence = projects + collections
 for i, p in enumerate(projects):
     prefix = '../../'
     shots = p['screenshots']
@@ -514,7 +523,7 @@ for i, p in enumerate(projects):
             f'<div class="reveal"><h2>{e(f[0])}</h2><p>{e(f[1])}</p></div>' for f in p['features']) + '</div>'
     links = ''.join(button(label, p[k], external=True) for k, label in [('repository', 'View source'), ('demo', 'Open project')] if p.get(k))
     note = f'<p class="collection-note">{e(p["note"])}</p>' if p.get('note') else ''
-    nxt = projects[(i + 1) % len(projects)]
+    nxt = sequence[(i + 1) % len(sequence)]
     write(f'projects/{p["slug"]}/index.html', head(p['title'], 'work', prefix, f'projects/{p["slug"]}/', p['summary']) + f'''<main id="main" class="project-page">
 <a class="text-link back-link" href="../../work/"><span aria-hidden="true">←</span> All projects</a>
 <section class="project-intro">
@@ -530,6 +539,32 @@ for i, p in enumerate(projects):
 <div class="gallery">{gallery}</div>
 {stack_section(p)}
 {note}
+<a class="next-project" href="../{e(nxt['slug'])}/"><span>Next project</span><strong>{e(nxt['title'])} {arrow()}</strong></a>
+</main>
+''' + footer(prefix))
+
+# --- Collection pages ---------------------------------------------------------
+# A short overview and a single "Built with" row per project; no screenshots or internals.
+for i, c in enumerate(collections):
+    prefix = '../../'
+    members = ''.join(
+        f'<article class="member reveal" aria-labelledby="member-{j}"><div class="member-head">'
+        f'<span class="member-num">{j + 1:02d}</span><p class="card-meta"><span>{e(m["category"])}</span></p></div>'
+        f'<h2 id="member-{j}">{e(m["title"])}</h2><p class="member-tagline">{e(m["tagline"])}</p>'
+        f'<p class="member-summary">{e(m["summary"])}</p>'
+        f'<div class="member-stack"><p class="member-stack-label">Built with</p>'
+        f'<ul class="tech-list" aria-label="{e(m["title"])} technologies">{"".join(tech_chip(t) for t in m["stack"])}</ul></div></article>'
+        for j, m in enumerate(c['projects']))
+    nxt = sequence[(len(projects) + i + 1) % len(sequence)]
+    write(f'projects/{c["slug"]}/index.html', head(c['title'], 'work', prefix, f'projects/{c["slug"]}/', c['summary']) + f'''<main id="main" class="project-page">
+<a class="text-link back-link" href="../../work/"><span aria-hidden="true">←</span> All projects</a>
+<section class="project-intro">
+  <p class="eyebrow">{e(c['category'])} <span class="pill">{e(c['visibility'])}</span></p>
+  <h1>{e(c['title'])}<span class="dot">.</span></h1>
+  <h2>{e(c['subtitle'])}</h2>
+  <p class="lead">{e(c['description'])}</p>
+</section>
+<div class="members">{members}</div>
 <a class="next-project" href="../{e(nxt['slug'])}/"><span>Next project</span><strong>{e(nxt['title'])} {arrow()}</strong></a>
 </main>
 ''' + footer(prefix))

@@ -1,0 +1,34 @@
+[
+  {
+    "slug": "edtech",
+    "title": "Educational Technology",
+    "subtitle": "Tools for teaching, learning, and events.",
+    "summary": "Three tools built for the University of Houston: accessible course documents, AI-assisted grading, and a STEM event platform.",
+    "category": "Educational technology",
+    "visibility": "University of Houston",
+    "description": "A collection of tools built for the University of Houston to save faculty and staff time, from making course materials accessible to grading at scale and running a STEM competition. Each one runs on AWS.",
+    "projects": [
+      {
+        "title": "PDF Accessibility",
+        "tagline": "Accessible documents, faster.",
+        "category": "Accessibility · AI",
+        "summary": "Turns course PDFs into WCAG 2.1 accessible documents. AI suggests alt text and document details, scanned pages are read with OCR, and a visual editor lets you check tags and reading order before downloading. Works on one file or a whole batch.",
+        "stack": ["React", "TypeScript", "Python", "AWS Lambda", "Step Functions", "Amazon Bedrock", "Amazon Textract", "Terraform"]
+      },
+      {
+        "title": "Rubric Grader",
+        "tagline": "AI-assisted grading at scale.",
+        "category": "Assessment · AI",
+        "summary": "Helps instructors grade consistently. Upload a blank assignment and the AI builds a rubric from it, then run a batch of student submissions, including handwritten work, against that rubric. Each is scored for how closely it matches, with results ready to export or send as student feedback.",
+        "stack": ["React", "TypeScript", "Python", "AWS Lambda", "Step Functions", "Amazon Bedrock", "DynamoDB", "Microsoft Entra ID", "Terraform"]
+      },
+      {
+        "title": "Mars Rover Celebration",
+        "tagline": "A STEM event, run end to end.",
+        "category": "Events · Registration",
+        "summary": "Registration and event management for the Mars Rover Celebration, a University of Houston STEM Center competition for elementary and middle school students. Teachers, students, and judges register online. On the day, a full admin panel handles check-in, judge assignments, and scoring, with live updates. In English and Spanish.",
+        "stack": ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "AWS Amplify", "Amazon SES", "AWS CDK"]
+      }
+    ]
+  }
+]

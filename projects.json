@@ -4,41 +4,41 @@
     "number": "01",
     "title": "RayCast",
     "subtitle": "Your media, organised. On any screen.",
-    "summary": "A complete media hub: organise your library, build subtitles, and cast to a TV, another browser, or any screen, with your phone as the remote.",
+    "summary": "A local media hub: organise your library, then cast it, a browser tab, or your whole screen to the TV, with your phone as the remote.",
     "category": "Application / Media hub",
     "visibility": "Personal project",
     "tags": [
       "Media library",
       "Chromecast",
+      "Screen casting",
       "Subtitles",
-      "Companion app",
       "Local-first"
     ],
-    "description": "RayCast started as a way to get media onto the big screen and grew into a full media hub. It organises your local library into shows and movies, builds subtitles and fixes their timing, and casts to a Chromecast, a browser tab, or your whole screen. It can also turn any other browser into a cast screen, and a phone companion app puts the controls in your hand. It all runs on your computer, so your media stays local.",
+    "description": "RayCast runs as a local web app on your computer. It organises your videos into shows and movies with artwork, remembers where you left off, and casts to a Chromecast or, experimentally, another browser. It can also cast a browser tab or your whole screen, and a phone companion puts the remote in your pocket. Your media stays on your own network.",
     "features": [
       [
-        "A full media library",
-        "Shows and movies, organised with thumbnails, search, sorting, and recently watched."
+        "A library that organises itself",
+        "Scan a folder, preview the changes, then sort everything into show and season folders, with undo."
       ],
       [
-        "Cast anywhere",
-        "Send to a Chromecast, cast a browser tab, or share your whole screen."
+        "Three ways to cast",
+        "Local videos, a browser tab through the extension, or your whole screen, to any Chromecast."
       ],
       [
         "Any browser, a new screen",
-        "Generate an external screen and cast to another browser, on any device."
-      ],
-      [
-        "Subtitles, built in",
-        "Build subtitles, load them independently, and fix out-of-sync timing locally, with a preview before saving."
+        "Pair another computer or tablet and use it as a cast screen (experimental)."
       ],
       [
         "Your phone, the remote",
-        "A companion app to browse your library and control playback from your phone."
+        "Scan a QR code to browse, cast, and control playback. No app store, no account."
       ],
       [
-        "Local and personal",
-        "Runs on your computer, so your media stays local. Pick from five themes."
+        "Subtitles that fit",
+        "Choose tracks, nudge the timing, import downloads, and repair out-of-sync subtitles locally."
+      ],
+      [
+        "Playback that recovers",
+        "Checks compatibility, converts when needed, retries on failure, and resumes where you left off."
       ]
     ],
     "screenshots": [
@@ -61,8 +61,9 @@
     "stack": [
       {
         "layer": "Interface",
-        "note": "Local web app, browser extensions, and a phone remote",
+        "note": "A local web app with no build step, plus browser extensions and a phone remote",
         "items": [
+          "HTML & CSS",
           "JavaScript",
           "Browser extensions",
           "Phone web app"
@@ -70,19 +71,21 @@
       },
       {
         "layer": "Core service",
-        "note": "A local Python service that manages the library and every cast",
+        "note": "A Python service that runs the library, metadata, and every cast",
         "items": [
           "Python",
           "TMDB & TVmaze"
         ]
       },
       {
-        "layer": "Media & devices",
-        "note": "Finds screens on the network, converts media, and fixes subtitle timing",
+        "layer": "Media & casting",
+        "note": "Finds TVs, converts and streams media, and repairs subtitle timing",
         "items": [
           "Chromecast",
           "Zeroconf discovery",
           "FFmpeg",
+          "HLS streaming",
+          "Windows capture",
           "ffsubsync"
         ]
       },
@@ -186,32 +189,40 @@
     "number": "03",
     "title": "World Cup 2026",
     "subtitle": "The whole tournament. In one place.",
-    "summary": "An automated tournament tracker, from the first kickoff to the final whistle.",
+    "summary": "A self-running tournament tracker that follows all 104 matches live, from the first kickoff to the final whistle.",
     "category": "Automation / Web application",
     "visibility": "Private project",
     "tags": [
       "Automation",
+      "Real-time",
       "Web app",
-      "Live data",
       "Print-ready"
     ],
-    "description": "A complete view of the World Cup: automatically updated scores, group standings, a knockout bracket, and detailed match views. Follow the action on screen or export a printable wall chart.",
+    "description": "World Cup 2026 follows every match on its own. It collects live scores every 30 seconds, cross-checks them against a second source, and pushes updates to every open screen within seconds. Group standings, the knockout bracket, and detailed match threads update themselves, and the whole tournament exports as a printable A3 wall chart.",
     "features": [
       [
-        "104 matches",
-        "Automated score tracking across the tournament."
+        "Runs itself",
+        "Live scores for all 104 matches, collected every 30 seconds and cross-checked for accuracy."
       ],
       [
-        "One complete view",
-        "Group standings and a bracket that advances as results arrive."
+        "A bracket that fills itself in",
+        "Winners advance automatically, using FIFA tiebreakers and the best third-place rules."
       ],
       [
         "Every match, closer",
-        "Event timelines, statistics, momentum, and lineups."
+        "Event timelines, stats, momentum, win probability, and lineups."
       ],
       [
-        "On screen. On paper.",
-        "Responsive views and printable A3 charts."
+        "Live on every screen",
+        "Updates arrive within seconds, with alerts for goals, red cards, and results."
+      ],
+      [
+        "On paper, too",
+        "Printable A3 wall charts and bracket posters, generated as PDFs."
+      ],
+      [
+        "Ready for match day",
+        "A simulation mode for testing, and an alert when the data source needs attention."
       ]
     ],
     "screenshots": [
@@ -242,7 +253,7 @@
     "stack": [
       {
         "layer": "Interface",
-        "note": "Live wall chart, bracket, and match views",
+        "note": "Wall chart, bracket, and match threads that update live",
         "items": [
           "Next.js",
           "React",
@@ -252,8 +263,8 @@
         ]
       },
       {
-        "layer": "Services",
-        "note": "API and real-time updates pushed to every open screen",
+        "layer": "Real-time API",
+        "note": "Serves the tournament and pushes every change to open screens",
         "items": [
           "NestJS",
           "TypeScript",
@@ -262,16 +273,16 @@
       },
       {
         "layer": "Automation",
-        "note": "Workers collect results and send updates on a schedule",
+        "note": "A headless browser collects scores on a schedule and prints the PDFs",
         "items": [
           "Playwright",
-          "BullMQ workers",
-          "Scheduled jobs"
+          "Scheduled jobs",
+          "Bull queues"
         ]
       },
       {
         "layer": "Data",
-        "note": "Tournament data plus queues and caching",
+        "note": "Matches, standings, and bracket state, with Redis for live messaging",
         "items": [
           "PostgreSQL",
           "Prisma",

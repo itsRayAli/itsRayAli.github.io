@@ -36,11 +36,11 @@
   "principles": [
     {
       "title": "Local-first where it matters",
-      "text": "Your media and data stay on your machine unless there’s a reason to move them. RayCast and Edgewise both run entirely on your own computer."
+      "text": "Data stays on your own machine unless there’s a good reason to move it."
     },
     {
       "title": "Automate the repetitive, keep people in control",
-      "text": "Automation should remove busywork, not judgement. Edgewise researches and explains, but never places a trade on its own."
+      "text": "Automation should remove busywork, not judgement. The final call stays with a person."
     },
     {
       "title": "Built to be run, not just demoed",
@@ -53,203 +53,256 @@
   ],
   "experience": [],
   "certifications": [],
-  "techGroups": {
-    "apps": "Apps & interfaces",
-    "backend": "Services & data",
-    "media": "Media & devices",
-    "automation": "Automation & AI",
-    "delivery": "Delivery & infrastructure"
-  },
   "tech": {
     "Python": [
       "Py",
-      "#3776ab",
-      "apps"
+      "#3776ab"
     ],
     "TypeScript": [
       "TS",
-      "#3178c6",
-      "apps"
+      "#3178c6"
     ],
     "JavaScript": [
       "JS",
-      "#f7df1e",
-      "apps"
+      "#f7df1e"
     ],
     "React": [
       "Re",
-      "#61dafb",
-      "apps"
+      "#61dafb"
     ],
     "Next.js": [
       "N",
-      "#000000",
-      "apps"
+      "#000000"
     ],
     "Tailwind CSS": [
       "Tw",
-      "#38bdf8",
-      "apps"
+      "#38bdf8"
     ],
     "Vite": [
       "Vi",
-      "#646cff",
-      "apps"
+      "#646cff"
     ],
     "shadcn/ui": [
       "ui",
-      "#18181b",
-      "apps"
+      "#18181b"
     ],
     "Recharts": [
       "Rc",
-      "#22b5bf",
-      "apps"
+      "#22b5bf"
     ],
     "Zustand": [
       "Zu",
-      "#443e38",
-      "apps"
+      "#443e38"
     ],
     "Framer Motion": [
       "Fm",
-      "#0055ff",
-      "apps"
+      "#0055ff"
     ],
     "Browser extensions": [
       "Ex",
-      "#4285f4",
-      "apps"
+      "#4285f4"
     ],
     "Phone web app": [
       "Ph",
-      "#8b5cf6",
-      "apps"
+      "#8b5cf6"
     ],
     "Node.js": [
       "No",
-      "#5fa04e",
-      "backend"
+      "#5fa04e"
     ],
     "NestJS": [
       "Ne",
-      "#e0234e",
-      "backend"
+      "#e0234e"
     ],
     "Socket.IO": [
       "IO",
-      "#25c2a0",
-      "backend"
+      "#25c2a0"
     ],
     "Zod": [
       "Zo",
-      "#3068b7",
-      "backend"
+      "#3068b7"
     ],
     "PostgreSQL": [
       "Pg",
-      "#4169e1",
-      "backend"
+      "#4169e1"
     ],
     "Prisma": [
       "Pr",
-      "#2d3748",
-      "backend"
+      "#2d3748"
     ],
     "Redis": [
       "Rd",
-      "#dc382d",
-      "backend"
+      "#dc382d"
     ],
     "SQLite": [
       "SQ",
-      "#0f80cc",
-      "backend"
+      "#0f80cc"
     ],
     "Drizzle ORM": [
       "Dz",
-      "#c5f74f",
-      "backend"
+      "#c5f74f"
     ],
     "Market data APIs": [
       "Mk",
-      "#10b981",
-      "backend"
+      "#10b981"
     ],
     "TMDB & TVmaze": [
       "Tv",
-      "#01b4e4",
-      "backend"
+      "#01b4e4"
     ],
     "Chromecast": [
       "Cc",
-      "#4285f4",
-      "media"
+      "#4285f4"
     ],
     "Zeroconf discovery": [
       "Zc",
-      "#6366f1",
-      "media"
+      "#6366f1"
     ],
     "FFmpeg": [
       "FF",
-      "#007808",
-      "media"
+      "#007808"
     ],
     "ffsubsync": [
       "Sb",
-      "#f59e0b",
-      "media"
+      "#f59e0b"
     ],
     "Playwright": [
       "Pw",
-      "#2ead33",
-      "automation"
-    ],
-    "BullMQ workers": [
-      "BQ",
-      "#e8443b",
-      "automation"
+      "#2ead33"
     ],
     "Scheduled jobs": [
       "Cr",
-      "#f97316",
-      "automation"
+      "#f97316"
     ],
     "Ollama local AI": [
       "Ol",
-      "#ffffff",
-      "automation"
+      "#ffffff"
     ],
     "Docker Compose": [
       "Dk",
-      "#2496ed",
-      "delivery"
+      "#2496ed"
     ],
     "Nginx": [
       "Nx",
-      "#009639",
-      "delivery"
+      "#009639"
     ],
     "GitHub Actions": [
       "GA",
-      "#2088ff",
-      "delivery"
+      "#2088ff"
     ],
     "Jest": [
       "Je",
-      "#c21325",
-      "delivery"
+      "#c21325"
     ],
     "Inno Setup": [
       "In",
-      "#264de4",
-      "delivery"
+      "#264de4"
     ],
     "PowerShell": [
       "PS",
-      "#5391fe",
-      "delivery"
+      "#5391fe"
+    ],
+    "HTML & CSS": [
+      "Hc",
+      "#e34f26"
+    ],
+    "HLS streaming": [
+      "HL",
+      "#0ea5e9"
+    ],
+    "Windows capture": [
+      "Wc",
+      "#0078d4"
+    ],
+    "Bull queues": [
+      "Bq",
+      "#e8443b"
+    ],
+    "AWS Lambda": [
+      "λ",
+      "#ff9900"
+    ],
+    "Step Functions": [
+      "SF",
+      "#e7157b"
+    ],
+    "Amazon Bedrock": [
+      "Br",
+      "#01a88d"
+    ],
+    "Amazon Textract": [
+      "Tx",
+      "#2e73b8"
+    ],
+    "DynamoDB": [
+      "Dy",
+      "#4053d6"
+    ],
+    "Microsoft Entra ID": [
+      "En",
+      "#0078d4"
+    ],
+    "Terraform": [
+      "Tf",
+      "#7b42bc"
+    ],
+    "AWS Amplify": [
+      "Am",
+      "#ff9900"
+    ],
+    "Amazon SES": [
+      "SE",
+      "#dd344c"
+    ],
+    "AWS CDK": [
+      "CD",
+      "#ec7211"
     ]
-  }
+  },
+  "stackOverview": [
+    {
+      "group": "Languages",
+      "items": [
+        "Python",
+        "TypeScript",
+        "JavaScript"
+      ]
+    },
+    {
+      "group": "Apps & services",
+      "items": [
+        "React",
+        "Next.js",
+        "Node.js",
+        "NestJS"
+      ]
+    },
+    {
+      "group": "Cloud",
+      "items": [
+        "AWS Lambda",
+        "Amazon Bedrock",
+        "DynamoDB",
+        "Terraform"
+      ]
+    },
+    {
+      "group": "Data",
+      "items": [
+        "PostgreSQL",
+        "Redis",
+        "SQLite"
+      ]
+    },
+    {
+      "group": "Automation & delivery",
+      "items": [
+        "Playwright",
+        "FFmpeg",
+        "Ollama local AI",
+        "Docker Compose",
+        "GitHub Actions"
+      ]
+    }
+  ]
 }
