@@ -176,7 +176,7 @@ if (form) {
     event.preventDefault();
     if (!form.reportValidity()) return;
     const data = new FormData(form);
-    const subject = `Portfolio enquiry: ${form.elements.service.selectedOptions[0].text}`;
+    const subject = `Portfolio inquiry: ${form.elements.service.selectedOptions[0].text}`;
     const body = `Hi Ray,\n\n${data.get('message')}\n\n${data.get('name')}\n${data.get('email')}`;
     location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     document.querySelector('#form-status').textContent = 'Your email app should open with a draft. If it doesn’t, use the email address on this page. Your message has not been sent by this website.';
