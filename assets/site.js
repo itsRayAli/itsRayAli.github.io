@@ -182,3 +182,117 @@ if (form) {
     document.querySelector('#form-status').textContent = 'Your email app should open with a draft. If it doesn’t, use the email address on this page. Your message has not been sent by this website.';
   });
 }
+
+// Lightbox: open project screenshots in-page instead of a new tab.
+// Without JS (or <dialog> support) the links still open the original image.
+const lightboxLinks = [...document.querySelectorAll('[data-lightbox]')];
+if (lightboxLinks.length && typeof HTMLDialogElement === 'function') {
+  const dialog = document.createElement('dialog');
+  dialog.className = 'lightbox';
+  dialog.setAttribute('aria-label', 'Screenshot viewer');
+  // Static markup only; captions and alt text are set with textContent/properties below.
+  dialog.innerHTML = `
+    <figure class="lightbox-figure">
+      <div class="lightbox-stage"><img class="lightbox-img" alt=""></div>
+      <figcaption class="lightbox-caption" aria-live="polite">
+        <span class="lightbox-text"></span>
+        <span class="lightbox-count"></span>
+        <button class="lightbox-zoom" type="button" aria-pressed="false">Zoom in</button>
+        <a class="lightbox-original" target="_blank" rel="noopener noreferrer">Open original <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span></a>
+      </figcaption>
+    </figure>
+    <button class="lightbox-btn lightbox-close" type="button" aria-label="Close viewer" autofocus>✕</button>
+    <button class="lightbox-btn lightbox-prev" type="button" aria-label="Previous screenshot">←</button>
+    <button class="lightbox-btn lightbox-next" type="button" aria-label="Next screenshot">→</button>`;
+  document.body.append(dialog);
+
+  const img = dialog.querySelector('.lightbox-img');
+  const text = dialog.querySelector('.lightbox-text');
+  const count = dialog.querySelector('.lightbox-count');
+  const original = dialog.querySelector('.lightbox-original');
+  const prev = dialog.querySelector('.lightbox-prev');
+  const next = dialog.querySelector('.lightbox-next');
+  const stage = dialog.querySelector('.lightbox-stage');
+  const zoomBtn = dialog.querySelector('.lightbox-zoom');
+  const multiple = lightboxLinks.length > 1;
+  prev.hidden = next.hidden = !multiple;
+  let index = 0;
+  let opener = null;
+  let zoomed = false;
+
+  // Zoom: grow the image so it fills the available height (wide screenshots
+  // become readable and scroll sideways), keeping the point under the cursor
+  // or finger in view. `at` is a 0–1 position within the image, if known.
+  const setZoom = (on, at = { x: 0.5, y: 0.5 }) => {
+    // Measure the fitted size before switching modes (zoom removes the fit limits).
+    const fitW = img.getBoundingClientRect().width;
+    zoomed = on;
+    dialog.classList.toggle('is-zoomed', on);
+    zoomBtn.setAttribute('aria-pressed', String(on));
+    zoomBtn.textContent = on ? 'Fit to screen' : 'Zoom in';
+    if (!on) { img.style.width = ''; return; }
+    const stageH = parseFloat(getComputedStyle(stage).maxHeight) || innerHeight * 0.7;
+    const byHeight = img.naturalWidth * (stageH / img.naturalHeight);
+    const target = Math.min(img.naturalWidth, Math.max(byHeight, fitW * 1.6));
+    img.style.width = `${Math.round(target)}px`;
+    requestAnimationFrame(() => {
+      stage.scrollLeft = at.x * stage.scrollWidth - stage.clientWidth / 2;
+      stage.scrollTop = at.y * stage.scrollHeight - stage.clientHeight / 2;
+    });
+  };
+
+  const show = (i) => {
+    setZoom(false);
+    index = (i + lightboxLinks.length) % lightboxLinks.length;
+    const link = lightboxLinks[index];
+    img.classList.add('is-loading');
+    img.onload = img.onerror = () => img.classList.remove('is-loading');
+    img.src = link.dataset.full || link.href;
+    img.alt = link.querySelector('img')?.alt || '';
+    text.textContent = link.dataset.caption || '';
+    count.textContent = multiple ? `${index + 1} / ${lightboxLinks.length}` : '';
+    original.href = link.href;
+    // Warm the cache for the neighbours so arrowing through feels instant.
+    if (multiple) {
+      for (const n of [index - 1, index + 1]) {
+        const neighbour = lightboxLinks[(n + lightboxLinks.length) % lightboxLinks.length];
+        new Image().src = neighbour.dataset.full || neighbour.href;
+      }
+    }
+  };
+
+  lightboxLinks.forEach((link, i) => link.addEventListener('click', (event) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return; // allow "open in new tab"
+    event.preventDefault();
+    opener = link;
+    show(i);
+    dialog.showModal();
+  }));
+
+  img.addEventListener('click', (event) => {
+    const r = img.getBoundingClientRect();
+    setZoom(!zoomed, { x: (event.clientX - r.left) / r.width, y: (event.clientY - r.top) / r.height });
+  });
+  zoomBtn.addEventListener('click', () => setZoom(!zoomed));
+  prev.addEventListener('click', () => show(index - 1));
+  next.addEventListener('click', () => show(index + 1));
+  dialog.querySelector('.lightbox-close').addEventListener('click', () => dialog.close());
+  // Clicking the dimmed area (the dialog itself, not its contents) closes it.
+  dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+  dialog.addEventListener('keydown', (event) => {
+    if (!multiple || zoomed) return; // arrows scroll the zoomed image instead
+    if (event.key === 'ArrowLeft') { event.preventDefault(); show(index - 1); }
+    if (event.key === 'ArrowRight') { event.preventDefault(); show(index + 1); }
+  });
+  // Swipe left/right on touch screens.
+  let startX = null;
+  dialog.addEventListener('pointerdown', (event) => { if (event.pointerType !== 'mouse') startX = event.clientX; });
+  dialog.addEventListener('pointerup', (event) => {
+    // While zoomed, horizontal drags scroll the image instead of changing it.
+    if (startX === null || !multiple || zoomed) { startX = null; return; }
+    const dx = event.clientX - startX;
+    startX = null;
+    if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+  });
+  dialog.addEventListener('close', () => { setZoom(false); opener?.focus(); opener = null; });
+}

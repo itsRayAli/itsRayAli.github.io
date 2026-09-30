@@ -409,7 +409,50 @@ textarea { resize: vertical; }
 .gallery-hero .window a { display: block; }
 .showcase-shot { margin: 0; }
 .showcase-shot figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; margin-top: .9rem; font-size: .82rem; color: var(--muted); }
-.showcase-shot figcaption span { color: var(--ink); }
+.showcase-shot figcaption span { display: inline-flex; align-items: center; gap: .45rem; color: var(--ink); }
+.showcase-shot figcaption svg { width: 15px; height: 15px; color: var(--accent-ink); }
+picture { display: contents; }
+[data-lightbox] { cursor: zoom-in; }
+
+/* --- Lightbox (created by site.js on project pages) ---------------------- */
+/* Screenshots are dark UIs, so the viewer stays dark in both themes. */
+html:has(.lightbox[open]) { overflow: hidden; }
+.lightbox { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: clamp(4.5rem, 7vh, 5.5rem) clamp(1rem, 7vw, 6.5rem) clamp(1rem, 4vh, 2rem); border: 0; background: transparent; color: #f7f5ff; overflow: hidden; }
+.lightbox[open] { display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; }
+.lightbox::backdrop { background: #07061ceb; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.lightbox { --stage-h: calc(100dvh - 11rem); }
+.lightbox-figure { display: flex; flex-direction: column; align-items: center; gap: 1rem; width: 100%; min-width: 0; max-height: 100%; margin: 0; }
+/* The stage scrolls when zoomed; unzoomed, the image simply fits inside it. */
+.lightbox-stage { max-width: 100%; max-height: var(--stage-h); overflow: auto; overscroll-behavior: contain; border: 1px solid #ffffff24; border-radius: 10px; background: #0b0a16; box-shadow: 0 40px 90px -30px #000; scrollbar-color: #ffffff40 transparent; }
+.lightbox-img { display: block; max-width: 100%; max-height: var(--stage-h); width: auto; height: auto; cursor: zoom-in; transition: opacity .25s; }
+.lightbox-img.is-loading { opacity: .35; }
+.lightbox.is-zoomed .lightbox-img { max-width: none; max-height: none; cursor: zoom-out; }
+.lightbox-zoom { padding: .3rem .8rem; border: 1px solid #ffffff2e; border-radius: 999px; background: #ffffff10; color: #f7f5ff; font: 600 .82rem 'DM Sans', system-ui, sans-serif; cursor: pointer; }
+.lightbox-zoom:hover { background: #ffffff22; }
+.lightbox-zoom:focus-visible, .lightbox-original:focus-visible { outline: 2px solid #ff847d; outline-offset: 3px; }
+.lightbox-caption { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .4rem 1.25rem; font-size: .9rem; color: #d8d3e8; text-align: center; }
+.lightbox-count { font-variant-numeric: tabular-nums; color: #9d97b8; }
+.lightbox-original { color: #ff847d; font-weight: 600; }
+.lightbox-original:hover { color: #ffa29c; }
+.lightbox-btn { position: fixed; z-index: 1; width: 48px; height: 48px; display: grid; place-items: center; padding: 0; border: 1px solid #ffffff2e; border-radius: 50%; background: #ffffff14; color: #fff; font-size: 1.25rem; line-height: 1; cursor: pointer; transition: background .2s, border-color .2s; }
+.lightbox-btn:hover { background: #ffffff26; border-color: #ffffff50; }
+.lightbox-btn:focus-visible { outline: 2px solid #ff847d; outline-offset: 3px; }
+.lightbox-btn[hidden] { display: none; }
+.lightbox-close { top: 1rem; right: 1rem; }
+.lightbox-prev { left: clamp(.5rem, 2vw, 1.5rem); top: 50%; translate: 0 -50%; }
+.lightbox-next { right: clamp(.5rem, 2vw, 1.5rem); top: 50%; translate: 0 -50%; }
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox[open] .lightbox-figure { animation: lightbox-in .3s var(--ease) both; }
+  .lightbox[open]::backdrop { animation: fade-in .25s ease-out both; }
+}
+@keyframes lightbox-in { from { opacity: 0; transform: scale(.97); } }
+@media (max-width: 760px) {
+  .lightbox { padding: 4.25rem .75rem 5.5rem; }
+  .lightbox { --stage-h: calc(100dvh - 13.5rem); }
+  .lightbox-prev, .lightbox-next { top: auto; bottom: 1rem; translate: none; }
+  .lightbox-prev { left: 1rem; }
+  .lightbox-next { right: 1rem; }
+}
 .feature-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; margin-bottom: 3.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid var(--line); }
 /* Five or six features read better as rows of three than as 4 + 2. */
 .feature-grid:has(> :nth-child(5)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }

@@ -6,6 +6,8 @@ Every generated link is relative, so the pages work at a GitHub Pages root
 basePath instead.
 """
 import json
+import shutil
+import subprocess
 from datetime import date
 from html import escape
 from pathlib import Path
@@ -36,6 +38,7 @@ ICONS = {
     'flow': '<rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><path d="M9 6h7a2 2 0 0 1 2 2v7M15 12l3 3 3-3M6 9v9h6"/>',
     'sun': '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
     'moon': '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/>',
+    'expand': '<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>',
 }
 
 # Runs in <head> before first paint so the saved or system theme applies without a flash.
@@ -76,6 +79,35 @@ def button(text, url, secondary=False, external=False):
     cls = 'button secondary' if secondary else 'button'
     ext = ' target="_blank" rel="noopener noreferrer"' if external else ''
     return f'<a class="{cls}" href="{e(url)}"{ext}>{text} {arrow()}</a>'
+
+
+# --- Images -------------------------------------------------------------------
+CWEBP = shutil.which('cwebp')
+
+
+def webp_for(src):
+    """Return the path of a WebP copy of a PNG/JPEG screenshot, or None.
+
+    When cwebp is installed (locally), the copy is (re)generated whenever the
+    original is newer. In CI, where cwebp is absent, the committed copy is used.
+    Settings keep small UI text sharp while cutting roughly 75% of the size."""
+    path = ROOT / src
+    if path.suffix.lower() not in ('.png', '.jpg', '.jpeg'):
+        return None
+    out = path.with_suffix('.webp')
+    if CWEBP and path.exists() and (not out.exists() or out.stat().st_mtime < path.stat().st_mtime):
+        subprocess.run([CWEBP, '-quiet', '-q', '90', '-sharp_yuv', '-m', '6', str(path), '-o', str(out)], check=True)
+        print(f'Optimised {src} -> {out.name} ({path.stat().st_size // 1024} KB -> {out.stat().st_size // 1024} KB)')
+    return str(Path(src).with_suffix('.webp')) if out.exists() else None
+
+
+def picture(prefix, src, alt, attrs=''):
+    """<picture> that serves WebP where available, with the original as fallback."""
+    img = f'<img src="{prefix}{e(src)}" alt="{e(alt)}" {attrs}>'
+    webp = webp_for(src)
+    if not webp:
+        return img
+    return f'<picture><source srcset="{prefix}{e(webp)}" type="image/webp">{img}</picture>'
 
 
 def tags(items):
@@ -207,7 +239,7 @@ def cards(prefix=''):
             extra = ' wide'
         if is_shot:
             cover = (f'<div class="window"><div class="window-bar" aria-hidden="true"><i></i><i></i><i></i></div>'
-                     f'<img src="{prefix}{e(img["src"])}" alt="{e(img["alt"])}" loading="lazy"></div>')
+                     + picture(prefix, img['src'], img['alt'], 'loading="lazy"') + '</div>')
         elif live:
             cover = f'<img class="art" src="{prefix}{e(img["src"])}" alt="{e(img["alt"])}" loading="lazy">'
         else:
@@ -351,14 +383,18 @@ for i, p in enumerate(projects):
     shots = p['screenshots']
     hero_shot, gallery = '', ''
     for j, s in enumerate(shots):
-        img = f'<img src="{prefix}{e(s["src"])}" alt="{e(s["alt"])}" ' + ('loading="lazy"' if j else 'fetchpriority="high"') + '>'
-        link = f'<a href="{prefix}{e(s["src"])}" target="_blank" rel="noopener noreferrer" aria-label="Open {e(s["caption"])} full size (opens in a new tab)">'
+        img = picture(prefix, s['src'], s['alt'], 'loading="lazy"' if j else 'fetchpriority="high"')
+        full = webp_for(s['src']) or s['src']
+        # site.js opens these in an in-page lightbox; without JS the link opens the original image.
+        link = (f'<a href="{prefix}{e(s["src"])}" data-lightbox data-full="{prefix}{e(full)}" '
+                f'data-caption="{e(s["caption"])}" aria-label="View {e(s["caption"])} larger">')
+        expand = f'<span>View larger {icon("expand")}</span>'
         if j == 0:
             hero_shot = (f'<figure class="showcase-shot"><div class="window"><div class="window-bar" aria-hidden="true"><i></i><i></i><i></i></div>'
-                         f'{link}{img}</a></div><figcaption>{e(s["caption"])}<span>View full size {arrow()}</span></figcaption></figure>')
+                         f'{link}{img}</a></div><figcaption>{e(s["caption"])}{expand}</figcaption></figure>')
         else:
             gallery += (f'<figure class="showcase-shot reveal">{link}{img}</a>'
-                        f'<figcaption>{e(s["caption"])}<span>View full size {arrow()}</span></figcaption></figure>')
+                        f'<figcaption>{e(s["caption"])}{expand}</figcaption></figure>')
     if not shots and p.get('art'):
         a = p['art']
         hero_shot = (f'<figure class="showcase-shot"><img class="art" src="{prefix}{e(a["src"])}" alt="{e(a["alt"])}" fetchpriority="high">'

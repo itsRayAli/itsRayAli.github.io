@@ -32,6 +32,8 @@ Put screenshots in `assets/<project>/` and add an entry to `projects.json`:
 
 `cover` (`{"src", "alt"}`) sets the image on the project's card when a screenshot looks too busy there. World Cup uses `assets/worldcup/cover.svg`. The project page still leads with the real screenshots.
 
+Screenshots open in an in-page lightbox with arrow-key and swipe navigation and a zoom for wide images. If you have `cwebp` installed (`brew install webp`), the build writes a WebP copy of each PNG/JPEG screenshot next to the original and serves it with the original as a fallback. Commit the `.webp` files. CI doesn't have `cwebp`, so it uses the committed copies.
+
 The slug becomes the URL (`/projects/my-project/`). Order in the file is the order on the site. Projects with screenshots become full-width feature cards that alternate sides. The first screenshot is the card cover (cropped to 16:10 from the top) and the framed hero image on the project page. With no screenshots, set `art` to an illustration (`{"src", "alt", "caption"}`) instead, as Edgewise does. Entries with neither render as "coming soon" placeholders. Set `repository` or `demo` to a URL to show those buttons. The build deletes pages for slugs that no longer exist.
 
 The "See my work" pill in the homepage hero counts projects that have a screenshot or illustration.
