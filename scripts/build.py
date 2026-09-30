@@ -268,6 +268,109 @@ def cta(prefix):
             f'{button("Email me", "mailto:" + site["email"], True)}</div></section>')
 
 
+# --- Tech stack ---------------------------------------------------------------
+TECH = site.get('tech', {})
+
+
+def tech_chip(name):
+    """A technology as a brand-coloured monogram tile plus its name."""
+    if name not in TECH:
+        raise SystemExit(f'Unknown technology "{name}": add it to "tech" in site.json')
+    mono, color, _group = TECH[name]
+    r, g, b = (int(color[i:i + 2], 16) for i in (1, 3, 5))
+    ink = '#10101a' if (0.299 * r + 0.587 * g + 0.114 * b) > 150 else '#ffffff'  # readable monogram on any brand colour
+    return (f'<li class="tech" style="--c:{e(color)};--on:{ink}"><span class="tech-mark" aria-hidden="true">{e(mono)}</span>'
+            f'<span class="tech-name">{e(name)}</span></li>')
+
+
+def stack_section(p):
+    """Project page: the stack drawn as connected layers, top (what you see) to bottom (how it ships)."""
+    layers = p.get('stack') or []
+    if not layers:
+        return ''
+    rows = ''.join(
+        f'<li class="stack-layer reveal"><div class="stack-label"><span class="stack-num">{i + 1:02d}</span>'
+        f'<div><h3>{e(layer["layer"])}</h3><p>{e(layer.get("note", ""))}</p></div></div>'
+        f'<ul class="tech-list" aria-label="{e(layer["layer"])} technologies">{"".join(tech_chip(t) for t in layer["items"])}</ul></li>'
+        for i, layer in enumerate(layers))
+    return (f'<section class="stack-section" aria-labelledby="stack-title"><div class="section-heading"><div>'
+            f'<p class="eyebrow">How it’s built</p><h2 id="stack-title">Tech <em>stack.</em></h2></div></div>'
+            f'<ol class="stack">{rows}</ol></section>')
+
+
+def stack_overview(prefix):
+    """About page: every technology used across the projects, grouped, with where it's used."""
+    used = {}
+    for p in projects:
+        for layer in p.get('stack') or []:
+            for t in layer['items']:
+                used.setdefault(t, [])
+                if p['title'] not in used[t]:
+                    used[t].append(p['title'])
+    if not used:
+        return ''
+    groups = ''
+    for key, label in site.get('techGroups', {}).items():
+        items = sorted((t for t in used if TECH[t][2] == key), key=lambda t: (-len(used[t]), t.lower()))
+        if not items:
+            continue
+        chips = ''
+        for t in items:
+            where = used[t]
+            badge = (f'<span class="tech-count" aria-hidden="true">×{len(where)}</span>' if len(where) > 1 else '')
+            chips += tech_chip(t).replace('</li>', f'{badge}<span class="sr-only">, used in {e(" and ".join(where))}</span></li>', 1) \
+                                 .replace('<li class="tech"', f'<li class="tech" title="Used in {e(" and ".join(where))}"', 1)
+        groups += (f'<li class="stack-layer reveal"><div class="stack-label"><div><h3>{e(label)}</h3>'
+                   f'<p>{len(items)} tool{"s" if len(items) != 1 else ""}</p></div></div>'
+                   f'<ul class="tech-list" aria-label="{e(label)}">{chips}</ul></li>')
+    names = [p['title'] for p in projects if p.get('stack')]
+    return (f'<section class="section about-section" aria-labelledby="tools-title"><div class="section-heading"><div>'
+            f'<p class="eyebrow">Tools I build with</p><h2 id="tools-title">A stack that <em>ships.</em></h2>'
+            f'<p class="section-lead">Everything here is in use in {e(", ".join(names[:-1]) + " and " + names[-1] if len(names) > 1 else names[0])}.</p></div>'
+            f'<a class="text-link" href="{prefix}work/">See the projects {arrow()}</a></div>'
+            f'<ul class="stack tech-groups">{groups}</ul></section>')
+
+
+def principles_section():
+    items = site.get('principles') or []
+    if not items:
+        return ''
+    cards = ''.join(f'<li class="principle reveal"><span class="principle-num">{i + 1:02d}</span><h3>{e(x["title"])}</h3><p>{e(x["text"])}</p></li>'
+                    for i, x in enumerate(items))
+    return (f'<section class="section about-section" aria-labelledby="how-title"><div class="section-heading"><div>'
+            f'<p class="eyebrow">How I work</p><h2 id="how-title">A few things I <em>believe.</em></h2></div></div>'
+            f'<ol class="principles">{cards}</ol></section>')
+
+
+def experience_section():
+    """Renders only when site.json has entries: {"role", "org", "period", "summary"}."""
+    items = site.get('experience') or []
+    if not items:
+        return ''
+    rows = ''.join(f'<li class="timeline-item reveal"><p class="timeline-period">{e(x.get("period", ""))}</p>'
+                   f'<h3>{e(x["role"])}<span> · {e(x.get("org", ""))}</span></h3><p>{e(x.get("summary", ""))}</p></li>'
+                   for x in items)
+    return (f'<section class="section about-section" aria-labelledby="exp-title"><div class="section-heading"><div>'
+            f'<p class="eyebrow">Experience</p><h2 id="exp-title">Where I’ve <em>worked.</em></h2></div></div>'
+            f'<ol class="timeline">{rows}</ol></section>')
+
+
+def certifications_section():
+    """Renders only when site.json has entries: {"name", "issuer", "year", "url"}."""
+    items = site.get('certifications') or []
+    if not items:
+        return ''
+    cards = ''
+    for x in items:
+        inner = (f'<span class="cert-issuer">{e(x.get("issuer", ""))}</span><h3>{e(x["name"])}</h3>'
+                 f'<span class="cert-year">{e(x.get("year", ""))}</span>')
+        cards += (f'<li class="cert reveal"><a href="{e(x["url"])}" target="_blank" rel="noopener noreferrer">{inner}'
+                  f'<span class="cert-verify">Verify {arrow()}</span></a></li>' if x.get('url') else f'<li class="cert reveal"><div>{inner}</div></li>')
+    return (f'<section class="section about-section" aria-labelledby="cert-title"><div class="section-heading"><div>'
+            f'<p class="eyebrow">Certifications</p><h2 id="cert-title">Proven, <em>on paper too.</em></h2></div></div>'
+            f'<ul class="certs">{cards}</ul></section>')
+
+
 def page_intro(eyebrow, title, lead):
     return f'<section class="page-intro"><p class="eyebrow">{eyebrow}</p><h1>{title}</h1><p class="lead">{lead}</p></section>'
 
@@ -324,6 +427,10 @@ write('about/index.html', head('About me', 'about', '../', 'about/', site['about
     {button('Let’s bring your idea to life', '../contact/')}
   </div>
 </section>
+{principles_section()}
+{stack_overview('../')}
+{experience_section()}
+{certifications_section()}
 {cta('../')}
 </main>
 ''' + footer('../'))
@@ -421,6 +528,7 @@ for i, p in enumerate(projects):
 {'<div class="gallery-hero">' + hero_shot + '</div>' if hero_shot else ''}
 {features}
 <div class="gallery">{gallery}</div>
+{stack_section(p)}
 {note}
 <a class="next-project" href="../{e(nxt['slug'])}/"><span>Next project</span><strong>{e(nxt['title'])} {arrow()}</strong></a>
 </main>

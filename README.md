@@ -9,7 +9,7 @@ python3 scripts/build.py
 python3 -m http.server 8000 --bind 127.0.0.1   # open http://127.0.0.1:8000/
 ```
 
-- `site.json`: name, title, header tagline and status pill, bio, email, GitHub, services, and the hero's rotating words.
+- `site.json`: name, title, header tagline and status pill, bio, email, GitHub, services, the hero's rotating words, and the About page content (`principles`, `experience`, `certifications`). It also holds the `tech` catalog: `"Name": ["monogram", "#brandcolour", "group"]`.
 - `projects.json`: one entry per project. Re-run the build after edits.
 - `assets/style.css` and `assets/site.js`: design and progressive enhancements (header, scroll reveal, rotating headline, particle canvas, motion toggle, contact form). All pages work without JavaScript.
 
@@ -38,11 +38,22 @@ The slug becomes the URL (`/projects/my-project/`). Order in the file is the ord
 
 The "See my work" pill in the homepage hero counts projects that have a screenshot or illustration.
 
+## About page and tech stack
+
+Each project's `stack` is a list of layers (`{"layer", "note", "items": [...]}`) drawn on its page as a connected diagram. Every item must exist in `site.json` → `tech`, or the build stops with a message. The About page combines all project stacks into one grouped overview automatically.
+
+Experience and certifications render only once filled in:
+
+```json
+"experience": [{"role": "…", "org": "…", "period": "2022 – now", "summary": "…"}],
+"certifications": [{"name": "…", "issuer": "…", "year": "2025", "url": "https://…"}]
+```
+
 ## GitHub Pages
 
 `.github/workflows/pages.yml` builds the site and deploys only the public folders. The source PNG portraits are excluded from the deploy. Only the optimised JPEG is served.
 
-1. Create a repository named `itsRayAli.github.io` so the site serves at https://itsrayali.github.io/.
+1. The site serves at https://rayali.dev (custom domain, DNS on Cloudflare in DNS-only mode, HTTPS certificate from GitHub). https://itsrayali.github.io redirects there.
 2. Push to `main`.
 3. Under Settings → Pages, set Source to **GitHub Actions**.
 

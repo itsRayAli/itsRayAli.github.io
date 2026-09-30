@@ -277,8 +277,13 @@ if (lightboxLinks.length && typeof HTMLDialogElement === 'function') {
   prev.addEventListener('click', () => show(index - 1));
   next.addEventListener('click', () => show(index + 1));
   dialog.querySelector('.lightbox-close').addEventListener('click', () => dialog.close());
-  // Clicking the dimmed area (the dialog itself, not its contents) closes it.
-  dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+  // Clicking anywhere except the image and the controls closes the viewer
+  // (the figure spans the full width, so "outside" can't just mean the backdrop).
+  dialog.addEventListener('click', (event) => {
+    if (swiped) { swiped = false; return; } // the click that ends a swipe isn't a close
+    if (event.target.closest('.lightbox-stage, button, a')) return;
+    dialog.close();
+  });
   dialog.addEventListener('keydown', (event) => {
     if (!multiple || zoomed) return; // arrows scroll the zoomed image instead
     if (event.key === 'ArrowLeft') { event.preventDefault(); show(index - 1); }
@@ -286,13 +291,14 @@ if (lightboxLinks.length && typeof HTMLDialogElement === 'function') {
   });
   // Swipe left/right on touch screens.
   let startX = null;
-  dialog.addEventListener('pointerdown', (event) => { if (event.pointerType !== 'mouse') startX = event.clientX; });
+  let swiped = false;
+  dialog.addEventListener('pointerdown', (event) => { swiped = false; if (event.pointerType !== 'mouse') startX = event.clientX; });
   dialog.addEventListener('pointerup', (event) => {
     // While zoomed, horizontal drags scroll the image instead of changing it.
     if (startX === null || !multiple || zoomed) { startX = null; return; }
     const dx = event.clientX - startX;
     startX = null;
-    if (Math.abs(dx) > 50) show(index + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 50) { swiped = true; show(index + (dx < 0 ? 1 : -1)); }
   });
   dialog.addEventListener('close', () => { setZoom(false); opener?.focus(); opener = null; });
 }

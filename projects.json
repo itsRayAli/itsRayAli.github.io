@@ -14,7 +14,7 @@
       "Companion app",
       "Local-first"
     ],
-    "description": "RayCast started as a way to get media onto the big screen and grew into a full media hub. It organises your local library into shows and movies, builds subtitles for your videos, and casts to a Chromecast, a browser tab, or your whole screen. It can also turn any other browser into a cast screen, and a phone companion app puts the controls in your hand. It all runs on your computer, so your media stays local.",
+    "description": "RayCast started as a way to get media onto the big screen and grew into a full media hub. It organises your local library into shows and movies, builds subtitles and fixes their timing, and casts to a Chromecast, a browser tab, or your whole screen. It can also turn any other browser into a cast screen, and a phone companion app puts the controls in your hand. It all runs on your computer, so your media stays local.",
     "features": [
       [
         "A full media library",
@@ -30,7 +30,7 @@
       ],
       [
         "Subtitles, built in",
-        "Build subtitles for your videos and bring them along to the big screen."
+        "Build subtitles, load them independently, and fix out-of-sync timing locally, with a preview before saving."
       ],
       [
         "Your phone, the remote",
@@ -57,7 +57,45 @@
     "note": null,
     "repository": null,
     "demo": null,
-    "cover": null
+    "cover": null,
+    "stack": [
+      {
+        "layer": "Interface",
+        "note": "Local web app, browser extensions, and a phone remote",
+        "items": [
+          "JavaScript",
+          "Browser extensions",
+          "Phone web app"
+        ]
+      },
+      {
+        "layer": "Core service",
+        "note": "A local Python service that manages the library and every cast",
+        "items": [
+          "Python",
+          "TMDB & TVmaze"
+        ]
+      },
+      {
+        "layer": "Media & devices",
+        "note": "Finds screens on the network, converts media, and fixes subtitle timing",
+        "items": [
+          "Chromecast",
+          "Zeroconf discovery",
+          "FFmpeg",
+          "ffsubsync"
+        ]
+      },
+      {
+        "layer": "Delivery",
+        "note": "Tested and packaged automatically, with a Windows installer",
+        "items": [
+          "GitHub Actions",
+          "Inno Setup",
+          "PowerShell"
+        ]
+      }
+    ]
   },
   {
     "slug": "edgewise",
@@ -101,7 +139,47 @@
     "note": "Edgewise is private. This illustration represents the experience and is not a product screenshot.",
     "repository": null,
     "demo": null,
-    "cover": null
+    "cover": null,
+    "stack": [
+      {
+        "layer": "Interface",
+        "note": "Research dashboard with side-by-side odds and charts",
+        "items": [
+          "React",
+          "Next.js",
+          "Vite",
+          "Tailwind CSS",
+          "shadcn/ui",
+          "Recharts"
+        ]
+      },
+      {
+        "layer": "Services & data",
+        "note": "Bounded queries to exchanges, validated and stored locally",
+        "items": [
+          "Node.js",
+          "TypeScript",
+          "Zod",
+          "Market data APIs",
+          "SQLite",
+          "Drizzle ORM"
+        ]
+      },
+      {
+        "layer": "AI",
+        "note": "Optional rule review with a local model; nothing leaves the machine",
+        "items": [
+          "Ollama local AI"
+        ]
+      },
+      {
+        "layer": "Delivery",
+        "note": "Scripted local setup",
+        "items": [
+          "PowerShell"
+        ]
+      }
+    ]
   },
   {
     "slug": "world-cup-2026",
@@ -160,6 +238,56 @@
     "cover": {
       "src": "assets/worldcup/cover.svg",
       "alt": "World Cup 2026 cover: title with 48 teams, 104 matches and 12 groups, a knockout bracket leading to the final, and a match momentum chart"
-    }
+    },
+    "stack": [
+      {
+        "layer": "Interface",
+        "note": "Live wall chart, bracket, and match views",
+        "items": [
+          "Next.js",
+          "React",
+          "Tailwind CSS",
+          "Zustand",
+          "Framer Motion"
+        ]
+      },
+      {
+        "layer": "Services",
+        "note": "API and real-time updates pushed to every open screen",
+        "items": [
+          "NestJS",
+          "TypeScript",
+          "Socket.IO"
+        ]
+      },
+      {
+        "layer": "Automation",
+        "note": "Workers collect results and send updates on a schedule",
+        "items": [
+          "Playwright",
+          "BullMQ workers",
+          "Scheduled jobs"
+        ]
+      },
+      {
+        "layer": "Data",
+        "note": "Tournament data plus queues and caching",
+        "items": [
+          "PostgreSQL",
+          "Prisma",
+          "Redis"
+        ]
+      },
+      {
+        "layer": "Delivery",
+        "note": "Containerised services behind a reverse proxy, tested in CI",
+        "items": [
+          "Docker Compose",
+          "Nginx",
+          "GitHub Actions",
+          "Jest"
+        ]
+      }
+    ]
   }
 ]

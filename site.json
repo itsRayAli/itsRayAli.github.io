@@ -1,6 +1,6 @@
 {
   "name": "Ray Ali",
-  "url": "https://itsrayali.github.io",
+  "url": "https://rayali.dev",
   "basePath": "/",
   "title": "Ray Ali — Cloud, Applications & Automation",
   "tagline": "Cloud · Apps · Automation",
@@ -9,10 +9,247 @@
   "github": "https://github.com/itsRayAli",
   "intro": "I bring ideas to life through cloud architecture, application development, and automation — with the power of AI.",
   "about": "I’m Ray. I turn ideas into useful digital experiences, connecting the possibilities of AI with cloud architecture, application development, and automation. My projects are a place to explore what’s possible and put those ideas to work.",
-  "rotatingWords": ["reality.", "the cloud.", "apps.", "automation.", "reality."],
+  "rotatingWords": [
+    "reality.",
+    "the cloud.",
+    "apps.",
+    "automation.",
+    "reality."
+  ],
   "services": [
-    {"title":"Cloud Architecture","icon":"cloud","description":"A cloud foundation shaped around your idea. Architecture and infrastructure that support your application today and give it room to grow."},
-    {"title":"Application Development","icon":"code","description":"Bring a concept to life as a usable application. From the first screen to the working product, with AI helping move ideas forward."},
-    {"title":"Automation","icon":"flow","description":"Make repetitive work happen automatically. Connect tools, streamline workflows, and turn manual steps into systems that work for you."}
-  ]
+    {
+      "title": "Cloud Architecture",
+      "icon": "cloud",
+      "description": "A cloud foundation shaped around your idea. Architecture and infrastructure that support your application today and give it room to grow."
+    },
+    {
+      "title": "Application Development",
+      "icon": "code",
+      "description": "Bring a concept to life as a usable application. From the first screen to the working product, with AI helping move ideas forward."
+    },
+    {
+      "title": "Automation",
+      "icon": "flow",
+      "description": "Make repetitive work happen automatically. Connect tools, streamline workflows, and turn manual steps into systems that work for you."
+    }
+  ],
+  "principles": [
+    {
+      "title": "Local-first where it matters",
+      "text": "Your media and data stay on your machine unless there’s a reason to move them. RayCast and Edgewise both run entirely on your own computer."
+    },
+    {
+      "title": "Automate the repetitive, keep people in control",
+      "text": "Automation should remove busywork, not judgement. Edgewise researches and explains, but never places a trade on its own."
+    },
+    {
+      "title": "Built to be run, not just demoed",
+      "text": "Tests, CI, installers, and containers from the start, so a project keeps working after launch day."
+    },
+    {
+      "title": "Clear about the limits",
+      "text": "Every signal explains itself and every experimental feature is labelled. Knowing what something can’t do builds trust."
+    }
+  ],
+  "experience": [],
+  "certifications": [],
+  "techGroups": {
+    "apps": "Apps & interfaces",
+    "backend": "Services & data",
+    "media": "Media & devices",
+    "automation": "Automation & AI",
+    "delivery": "Delivery & infrastructure"
+  },
+  "tech": {
+    "Python": [
+      "Py",
+      "#3776ab",
+      "apps"
+    ],
+    "TypeScript": [
+      "TS",
+      "#3178c6",
+      "apps"
+    ],
+    "JavaScript": [
+      "JS",
+      "#f7df1e",
+      "apps"
+    ],
+    "React": [
+      "Re",
+      "#61dafb",
+      "apps"
+    ],
+    "Next.js": [
+      "N",
+      "#000000",
+      "apps"
+    ],
+    "Tailwind CSS": [
+      "Tw",
+      "#38bdf8",
+      "apps"
+    ],
+    "Vite": [
+      "Vi",
+      "#646cff",
+      "apps"
+    ],
+    "shadcn/ui": [
+      "ui",
+      "#18181b",
+      "apps"
+    ],
+    "Recharts": [
+      "Rc",
+      "#22b5bf",
+      "apps"
+    ],
+    "Zustand": [
+      "Zu",
+      "#443e38",
+      "apps"
+    ],
+    "Framer Motion": [
+      "Fm",
+      "#0055ff",
+      "apps"
+    ],
+    "Browser extensions": [
+      "Ex",
+      "#4285f4",
+      "apps"
+    ],
+    "Phone web app": [
+      "Ph",
+      "#8b5cf6",
+      "apps"
+    ],
+    "Node.js": [
+      "No",
+      "#5fa04e",
+      "backend"
+    ],
+    "NestJS": [
+      "Ne",
+      "#e0234e",
+      "backend"
+    ],
+    "Socket.IO": [
+      "IO",
+      "#25c2a0",
+      "backend"
+    ],
+    "Zod": [
+      "Zo",
+      "#3068b7",
+      "backend"
+    ],
+    "PostgreSQL": [
+      "Pg",
+      "#4169e1",
+      "backend"
+    ],
+    "Prisma": [
+      "Pr",
+      "#2d3748",
+      "backend"
+    ],
+    "Redis": [
+      "Rd",
+      "#dc382d",
+      "backend"
+    ],
+    "SQLite": [
+      "SQ",
+      "#0f80cc",
+      "backend"
+    ],
+    "Drizzle ORM": [
+      "Dz",
+      "#c5f74f",
+      "backend"
+    ],
+    "Market data APIs": [
+      "Mk",
+      "#10b981",
+      "backend"
+    ],
+    "TMDB & TVmaze": [
+      "Tv",
+      "#01b4e4",
+      "backend"
+    ],
+    "Chromecast": [
+      "Cc",
+      "#4285f4",
+      "media"
+    ],
+    "Zeroconf discovery": [
+      "Zc",
+      "#6366f1",
+      "media"
+    ],
+    "FFmpeg": [
+      "FF",
+      "#007808",
+      "media"
+    ],
+    "ffsubsync": [
+      "Sb",
+      "#f59e0b",
+      "media"
+    ],
+    "Playwright": [
+      "Pw",
+      "#2ead33",
+      "automation"
+    ],
+    "BullMQ workers": [
+      "BQ",
+      "#e8443b",
+      "automation"
+    ],
+    "Scheduled jobs": [
+      "Cr",
+      "#f97316",
+      "automation"
+    ],
+    "Ollama local AI": [
+      "Ol",
+      "#ffffff",
+      "automation"
+    ],
+    "Docker Compose": [
+      "Dk",
+      "#2496ed",
+      "delivery"
+    ],
+    "Nginx": [
+      "Nx",
+      "#009639",
+      "delivery"
+    ],
+    "GitHub Actions": [
+      "GA",
+      "#2088ff",
+      "delivery"
+    ],
+    "Jest": [
+      "Je",
+      "#c21325",
+      "delivery"
+    ],
+    "Inno Setup": [
+      "In",
+      "#264de4",
+      "delivery"
+    ],
+    "PowerShell": [
+      "PS",
+      "#5391fe",
+      "delivery"
+    ]
+  }
 }
