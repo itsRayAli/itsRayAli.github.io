@@ -143,7 +143,7 @@
     ],
     "screenshots": [
       {
-        "src": "assets/afterglow/original.png",
+        "src": "assets/afterglow/workspace.png",
         "alt": "Afterglow Original theme showing the paused replay buffer, capture setup, replay length controls, and local replay library",
         "caption": "01 / Ready for the moment"
       },

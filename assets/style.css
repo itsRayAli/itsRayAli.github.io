@@ -320,6 +320,8 @@ html:not(.js) .motion-toggle { display: none; }
 .featured .card-copy { justify-content: center; padding: clamp(1.75rem, 3vw, 2.75rem); }
 .featured h3 { font-size: clamp(1.8rem, 2.8vw, 2.6rem); }
 .featured .window img { aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 0; }
+/* Keep the wide Afterglow workspace intact on project cards. */
+.featured[href$="projects/afterglow/"] .window img { aspect-ratio: auto; }
 .featured.reverse { grid-template-columns: 1fr 1.45fr; }
 .featured .card-cover > .art, .gallery-hero .art { display: block; width: 100%; height: auto; border: 1px solid var(--ring); border-radius: 10px; box-shadow: 0 30px 60px -25px var(--shadow); }
 .featured .card-cover > .art { aspect-ratio: 16 / 10; object-fit: cover; transition: transform .6s var(--ease); }
