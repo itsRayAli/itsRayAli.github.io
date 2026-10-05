@@ -257,6 +257,30 @@
     "AWS CDK": [
       "CD",
       "#ec7211"
+    ],
+    "Electron": [
+      "E",
+      "#9FEAF9"
+    ],
+    "Local file storage": [
+      "FS",
+      "#a8b5c7"
+    ],
+    "WASAPI audio": [
+      "WA",
+      "#0078d4"
+    ],
+    "PipeWire": [
+      "PW",
+      "#7fc4c8"
+    ],
+    "GPU encoding": [
+      "GPU",
+      "#91c75b"
+    ],
+    "NSIS": [
+      "NS",
+      "#6495ed"
     ]
   },
   "stackOverview": [

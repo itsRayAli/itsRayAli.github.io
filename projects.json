@@ -101,8 +101,115 @@
     ]
   },
   {
-    "slug": "edgewise",
+    "slug": "afterglow",
     "number": "02",
+    "title": "Afterglow",
+    "subtitle": "The moment happened. Keep it anyway.",
+    "summary": "A desktop instant replay app that keeps the last few moments ready to save. Capture what just happened, trim the clip, and keep it on your machine.",
+    "category": "Application / Instant replay",
+    "visibility": "Personal project",
+    "tags": [
+      "Instant replay",
+      "Screen capture",
+      "Clip editing",
+      "Local-first"
+    ],
+    "description": "Afterglow keeps a rolling history of a screen or window, so you can save a moment after it happens. Start the buffer, then use a global shortcut to capture the last 15 seconds to 5 minutes. Trim the ends, cut out unwanted sections, and save the replay as an MP4. Video and audio stay on your own machine.",
+    "features": [
+      [
+        "Catch what just happened",
+        "Choose a screen or window and keep up to five minutes ready to capture with a global shortcut."
+      ],
+      [
+        "Keep the good parts",
+        "Trim the ends or cut out sections, preview the edit, and save a new clip without changing the original saved replay."
+      ],
+      [
+        "Sound, your way",
+        "Capture system audio, add a microphone, and adjust their levels before they’re mixed into one track."
+      ],
+      [
+        "Small when you need it",
+        "Switch to compact controls or hide to the tray while the buffer keeps running."
+      ],
+      [
+        "Made to stay yours",
+        "Store replays locally as MP4s, organised by app and date, with a library for reviewing and saving clips."
+      ],
+      [
+        "Four ways to feel at home",
+        "Original, Rosé, Midnight, and Tidal bring matching colours to the full window, mini mode, and tray icon."
+      ]
+    ],
+    "screenshots": [
+      {
+        "src": "assets/afterglow/original.png",
+        "alt": "Afterglow Original theme showing the paused replay buffer, capture setup, replay length controls, and local replay library",
+        "caption": "01 / Ready for the moment"
+      },
+      {
+        "src": "assets/afterglow/afterglow-themes.svg",
+        "alt": "Afterglow in all four themes: lime-accented Original, pink Rosé, violet Midnight, and teal Tidal",
+        "caption": "02 / Four themes, one little time machine"
+      },
+      {
+        "src": "assets/afterglow/capture-options.png",
+        "alt": "Afterglow capture settings with quality, frame rate, system audio, microphone, and automatic GPU encoding controls",
+        "caption": "03 / Capture, tuned to you"
+      },
+      {
+        "src": "assets/afterglow/mini-mode.svg",
+        "alt": "Afterglow mini mode with start buffer, capture replay, timer, source selector, and capture shortcut",
+        "caption": "04 / Just the essentials"
+      }
+    ],
+    "art": null,
+    "note": "Screenshots from the installed desktop preview. Preview builds are available for Windows, macOS, and Linux; capture support varies by platform.",
+    "repository": null,
+    "demo": null,
+    "cover": null,
+    "stack": [
+      {
+        "layer": "Interface",
+        "note": "An Electron desktop app with four themes, a clip editor, global shortcuts, and mini mode",
+        "items": [
+          "Electron",
+          "HTML & CSS",
+          "JavaScript"
+        ]
+      },
+      {
+        "layer": "Core service",
+        "note": "A local Node.js service manages the replay buffer, clip library, settings, and capture recovery",
+        "items": [
+          "Node.js",
+          "Local file storage"
+        ]
+      },
+      {
+        "layer": "Capture & media",
+        "note": "Captures screens and audio, uses GPU encoding when available, and trims and exports MP4 clips",
+        "items": [
+          "FFmpeg",
+          "Windows capture",
+          "WASAPI audio",
+          "PipeWire",
+          "GPU encoding"
+        ]
+      },
+      {
+        "layer": "Delivery",
+        "note": "Automated tests and native builds produce preview installers for Windows, macOS, and Linux",
+        "items": [
+          "GitHub Actions",
+          "NSIS"
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "edgewise",
+    "number": "03",
     "title": "Edgewise",
     "subtitle": "Where the markets disagree.",
     "summary": "An on-demand research tool that lines up prediction-market odds across exchanges and shows where they don’t agree.",
@@ -186,7 +293,7 @@
   },
   {
     "slug": "world-cup-2026",
-    "number": "03",
+    "number": "04",
     "title": "World Cup 2026",
     "subtitle": "The whole tournament. In one place.",
     "summary": "A self-running tournament tracker that follows all 104 matches live, from the first kickoff to the final whistle.",
