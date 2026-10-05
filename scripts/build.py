@@ -193,6 +193,12 @@ def footer(prefix):
 
 
 # --- Reusable sections --------------------------------------------------------
+def window_bar(p):
+    if not p.get('windowBar', True):
+        return ''
+    return '<div class="window-bar" aria-hidden="true"><i></i><i></i><i></i></div>'
+
+
 def cover_of(p):
     """Return (image, is_screenshot) for a project's card cover, or (None, False) if it has none.
     A dedicated `cover` wins; otherwise the first screenshot, then the `art` illustration."""
@@ -241,7 +247,7 @@ def cards(prefix=''):
         elif len(upcoming) % 2 and p is upcoming[-1]:
             extra = ' wide'
         if is_shot:
-            cover = (f'<div class="window"><div class="window-bar" aria-hidden="true"><i></i><i></i><i></i></div>'
+            cover = (f'<div class="window">{window_bar(p)}'
                      + picture(prefix, img['src'], img['alt'], 'loading="lazy"') + '</div>')
         elif live:
             cover = f'<img class="art" src="{prefix}{e(img["src"])}" alt="{e(img["alt"])}" loading="lazy">'
@@ -506,7 +512,7 @@ for i, p in enumerate(projects):
                 f'data-caption="{e(s["caption"])}" aria-label="View {e(s["caption"])} larger">')
         expand = f'<span>View larger {icon("expand")}</span>'
         if j == 0:
-            hero_shot = (f'<figure class="showcase-shot"><div class="window"><div class="window-bar" aria-hidden="true"><i></i><i></i><i></i></div>'
+            hero_shot = (f'<figure class="showcase-shot"><div class="window">{window_bar(p)}'
                          f'{link}{img}</a></div><figcaption>{e(s["caption"])}{expand}</figcaption></figure>')
         else:
             gallery += (f'<figure class="showcase-shot reveal">{link}{img}</a>'

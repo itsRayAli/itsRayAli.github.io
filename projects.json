@@ -205,7 +205,8 @@
           "NSIS"
         ]
       }
-    ]
+    ],
+    "windowBar": false
   },
   {
     "slug": "edgewise",
