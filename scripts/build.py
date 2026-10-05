@@ -104,6 +104,42 @@ def webp_for(src):
     return str(Path(src).with_suffix('.webp')) if out.exists() else None
 
 
+def image_size(src):
+    """(width, height) of a PNG, JPEG or SVG, read from the file header; None if unknown.
+    Used to lay out thumbnails at their true shape instead of cropping them."""
+    import re
+    import struct
+    path = ROOT / src
+    if not path.exists():
+        return None
+    data = path.read_bytes()
+    if data[:8] == b'\x89PNG\r\n\x1a\n':
+        return struct.unpack('>II', data[16:24])
+    if data[:2] == b'\xff\xd8':  # JPEG: walk segments to the start-of-frame marker
+        i = 2
+        while i + 9 < len(data):
+            marker, length = data[i + 1], struct.unpack('>H', data[i + 2:i + 4])[0]
+            if marker in (0xC0, 0xC1, 0xC2):
+                h, w = struct.unpack('>HH', data[i + 5:i + 9])
+                return w, h
+            i += 2 + length
+        return None
+    if path.suffix.lower() == '.svg':
+        head = data[:2000].decode('utf-8', 'ignore')
+        w, h = re.search(r'\swidth="([\d.]+)"', head), re.search(r'\sheight="([\d.]+)"', head)
+        if w and h:
+            return round(float(w.group(1))), round(float(h.group(1)))
+        vb = re.search(r'viewBox="[\d.\s-]+?\s([\d.]+)\s([\d.]+)"', head)
+        if vb:
+            return round(float(vb.group(1))), round(float(vb.group(2)))
+    return None
+
+
+def size_attrs(src):
+    size = image_size(src)
+    return f'width="{size[0]}" height="{size[1]}"' if size else ''
+
+
 def picture(prefix, src, alt, attrs=''):
     """<picture> that serves WebP where available, with the original as fallback."""
     img = f'<img src="{prefix}{e(src)}" alt="{e(alt)}" {attrs}>'
@@ -248,7 +284,7 @@ def cards(prefix=''):
             extra = ' wide'
         if is_shot:
             cover = (f'<div class="window">{window_bar(p)}'
-                     + picture(prefix, img['src'], img['alt'], 'loading="lazy"') + '</div>')
+                     + picture(prefix, img['src'], img['alt'], 'loading="lazy" ' + size_attrs(img['src'])) + '</div>')
         elif live:
             cover = f'<img class="art" src="{prefix}{e(img["src"])}" alt="{e(img["alt"])}" loading="lazy">'
         else:
@@ -505,7 +541,9 @@ for i, p in enumerate(projects):
     shots = p['screenshots']
     hero_shot, gallery = '', ''
     for j, s in enumerate(shots):
-        img = picture(prefix, s['src'], s['alt'], 'loading="lazy"' if j else 'fetchpriority="high"')
+        img = picture(prefix, s['src'], s['alt'], ('loading="lazy"' if j else 'fetchpriority="high"') + ' ' + size_attrs(s['src']))
+        size = image_size(s['src'])
+        ratio = f' style="--r:{size[0] / size[1]:.3f}"' if size else ''
         full = webp_for(s['src']) or s['src']
         # site.js opens these in an in-page lightbox; without JS the link opens the original image.
         link = (f'<a href="{prefix}{e(s["src"])}" data-lightbox data-full="{prefix}{e(full)}" '
@@ -515,7 +553,7 @@ for i, p in enumerate(projects):
             hero_shot = (f'<figure class="showcase-shot"><div class="window">{window_bar(p)}'
                          f'{link}{img}</a></div><figcaption>{e(s["caption"])}{expand}</figcaption></figure>')
         else:
-            gallery += (f'<figure class="showcase-shot reveal">{link}{img}</a>'
+            gallery += (f'<figure class="showcase-shot reveal"{ratio}>{link}{img}</a>'
                         f'<figcaption>{e(s["caption"])}{expand}</figcaption></figure>')
     if not shots and p.get('art'):
         a = p['art']

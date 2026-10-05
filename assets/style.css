@@ -319,9 +319,8 @@ html:not(.js) .motion-toggle { display: none; }
 .featured .card-cover { display: flex; align-items: center; padding: clamp(1rem, 2.5vw, 2.25rem); background: var(--cover-bg); }
 .featured .card-copy { justify-content: center; padding: clamp(1.75rem, 3vw, 2.75rem); }
 .featured h3 { font-size: clamp(1.8rem, 2.8vw, 2.6rem); }
-.featured .window img { aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 0; }
-/* Keep the wide Afterglow workspace intact on project cards. */
-.featured[href$="projects/afterglow/"] .window img { aspect-ratio: auto; }
+/* Card screenshots keep their real shape too, so nothing is cropped at first glance. */
+.featured .window img { height: auto; }
 .featured.reverse { grid-template-columns: 1fr 1.45fr; }
 .featured .card-cover > .art, .gallery-hero .art { display: block; width: 100%; height: auto; border: 1px solid var(--ring); border-radius: 10px; box-shadow: 0 30px 60px -25px var(--shadow); }
 .featured .card-cover > .art { aspect-ratio: 16 / 10; object-fit: cover; transition: transform .6s var(--ease); }
@@ -486,13 +485,16 @@ html:has(.lightbox[open]) { overflow: hidden; }
 .feature-grid h2 { font-size: 1.1rem; letter-spacing: -.02em; }
 .feature-grid h2::before { content: ''; display: block; width: 24px; height: 2px; margin-bottom: 1rem; border-radius: 2px; background: var(--grad); }
 .feature-grid p { margin-top: .6rem; font-size: .92rem; color: var(--muted); }
-.gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
-.gallery .showcase-shot a { display: block; overflow: hidden; border: 1px solid var(--line-2); border-radius: 12px; transition: border-color .25s; }
+/* Thumbnails show the whole screenshot at its real shape (no cropping). Each item's
+   flex size is proportional to its aspect ratio (--r, set by the build), so items that
+   share a row end up the same height; very wide images take a row to themselves. */
+.gallery { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; }
+.gallery .showcase-shot { flex: var(--r, 1.6) 1 calc(var(--r, 1.6) * 220px); min-width: 0; }
+.gallery .showcase-shot a { display: block; overflow: hidden; border: 1px solid var(--line-2); border-radius: 12px; background: #0b0a16; transition: border-color .25s; }
 .gallery .showcase-shot a:hover { border-color: #ff655e88; }
-.gallery .showcase-shot img { display: block; width: 100%; aspect-ratio: 1.6; object-fit: cover; object-position: top; transition: transform .6s var(--ease); }
-.gallery .showcase-shot a:hover img { transform: scale(1.03); }
-.gallery .showcase-shot:only-child { grid-column: 1 / -1; }
-.gallery .showcase-shot:only-child img { aspect-ratio: auto; object-fit: contain; }
+.gallery .showcase-shot img { display: block; width: 100%; height: auto; transition: transform .6s var(--ease); }
+.gallery .showcase-shot a:hover img { transform: scale(1.02); }
+.gallery .showcase-shot:only-child { flex-basis: 100%; }
 .coming-project { grid-column: 1 / -1; padding: 4rem; border: 1px dashed var(--line-2); border-radius: 20px; text-align: center; background: var(--glass); }
 .coming-project span { font: 800 7rem/1 var(--heading); color: transparent; -webkit-text-stroke: 1px var(--outline-num); }
 .coming-project p { margin-top: 1.25rem; color: var(--muted); }
@@ -602,8 +604,7 @@ html.js .reveal.is-visible { opacity: 1; transform: none; }
   .featured.reverse .card-cover { order: 0; }
   .featured .card-cover { padding: 1rem; }
   .upcoming { grid-template-columns: 84px 1fr; }
-  .gallery { grid-template-columns: 1fr; }
-  .gallery .showcase-shot img { aspect-ratio: auto; object-fit: contain; }
+  .gallery .showcase-shot { flex-basis: 100%; }
   .feature-grid { gap: 1rem; }
   .principles { grid-template-columns: minmax(0, 1fr); }
   .stack-layer { padding: 1.2rem; }
