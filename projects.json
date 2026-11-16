@@ -408,5 +408,75 @@
         ]
       }
     ]
+  },
+  {
+    "slug": "chatmap",
+    "number": "05",
+    "title": "ChatMap",
+    "subtitle": "Find the conversation. Keep the idea.",
+    "summary": "A browser extension that brings your visited AI conversations into one searchable, bookmarkable library, stored locally in your browser.",
+    "category": "Browser extension / AI conversations",
+    "visibility": "Personal project",
+    "tags": [
+      "ChatGPT",
+      "Copilot",
+      "Gemini",
+      "Search & bookmarks",
+      "Local-first"
+    ],
+    "description": "ChatMap helps you find conversations across ChatGPT, Microsoft Copilot, and Google Gemini. Search captured titles, prompts, and replies, bookmark useful chats, and jump back to the source. The library stays in your browser, with no ChatMap account, analytics, or external requests.",
+    "features": [
+      [
+        "One place to look",
+        "Search captured titles, user prompts, and assistant replies across three AI services, with phrase search and relevance sorting."
+      ],
+      [
+        "Keep useful conversations close",
+        "Bookmark chats, filter by platform or last-change date, and reopen the original conversation."
+      ],
+      [
+        "Bring older chats along",
+        "Import ChatGPT’s conversations.json export, or export and import a ChatMap JSON backup to move your library."
+      ],
+      [
+        "A library that stays local",
+        "Conversation data lives in IndexedDB in your browser profile. Chrome, Edge, and Firefox have separate builds and libraries."
+      ]
+    ],
+    "screenshots": [],
+    "art": {
+      "src": "assets/chatmap/cover.svg",
+      "alt": "ChatMap illustration connecting ChatGPT, Copilot, and Gemini to a local library with search and bookmarks",
+      "caption": "Three services, one local library"
+    },
+    "note": "Illustration, not a product screenshot. ChatMap captures loaded messages and visible history links from visited pages; it does not crawl unopened conversations. Capture support can change with provider interfaces. Copilot support covers the consumer web app.",
+    "repository": "https://github.com/itsRayAli/ChatMap",
+    "demo": null,
+    "cover": null,
+    "stack": [
+      {
+        "layer": "Interface",
+        "note": "A dependency-free dashboard with search, bookmarks, filters, and themes",
+        "items": [
+          "HTML & CSS",
+          "JavaScript",
+          "Browser extensions"
+        ]
+      },
+      {
+        "layer": "Local data",
+        "note": "IndexedDB storage with JSON backup and ChatGPT export import",
+        "items": [
+          "IndexedDB"
+        ]
+      },
+      {
+        "layer": "Build & validation",
+        "note": "Browser-specific builds and automated tests using Node.js, with no package installation required",
+        "items": [
+          "Node.js"
+        ]
+      }
+    ]
   }
 ]

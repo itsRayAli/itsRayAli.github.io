@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+<title id="title">ChatMap — find the conversation, keep the idea</title>
+<desc id="desc">An illustration of ChatGPT, Copilot, and Gemini connected to a searchable local conversation library.</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#171329"/><stop offset="1" stop-color="#292041"/></linearGradient></defs>
+<rect width="1440" height="900" rx="32" fill="url(#bg)"/>
+<g font-family="system-ui, sans-serif">
+<text x="90" y="130" fill="#bda6ff" font-size="23" letter-spacing="5">CONVERSATIONS, CONNECTED</text>
+<text x="90" y="235" fill="#fff" font-size="82" font-weight="700">ChatMap<tspan fill="#ff837a">.</tspan></text>
+<text x="94" y="292" fill="#d4cce5" font-size="30">Find the conversation. Keep the idea.</text>
+<g fill="none" stroke="#9b7bff" stroke-width="4"><path d="M365 450H470Q510 450 510 490V575H610"/><path d="M365 575H610"/><path d="M365 700H470Q510 700 510 660V575"/></g>
+<g fill="#302741" stroke="#665380" stroke-width="2"><rect x="90" y="405" width="280" height="90" rx="20"/><rect x="90" y="530" width="280" height="90" rx="20"/><rect x="90" y="655" width="280" height="90" rx="20"/></g>
+<g fill="#fff" font-size="30" text-anchor="middle"><text x="230" y="462">ChatGPT</text><text x="230" y="587">Copilot</text><text x="230" y="712">Gemini</text></g>
+<rect x="610" y="390" width="740" height="370" rx="28" fill="#f5f1fc"/>
+<text x="652" y="450" fill="#392d53" font-size="25" font-weight="650">YOUR LOCAL LIBRARY</text>
+<rect x="650" y="480" width="660" height="65" rx="15" fill="#e7def5"/>
+<circle cx="680" cy="509" r="11" fill="none" stroke="#6e578e" stroke-width="3"/><path d="m688 518 10 10" stroke="#6e578e" stroke-width="3"/>
+<text x="720" y="522" fill="#65517f" font-size="24">Search prompts, replies, and titles</text>
+<path d="M655 578H1305M655 659H1305" stroke="#ded4eb" stroke-width="2"/>
+<g fill="#392d53" font-size="27"><text x="658" y="627">The idea worth revisiting</text><text x="658" y="708">The answer you wanted to keep</text></g>
+<g fill="#8060b6" font-size="34"><text x="1255" y="629">★</text><text x="1255" y="710">★</text></g>
+<text x="94" y="832" fill="#c5b7d9" font-size="22">Search · Bookmark · Reopen</text>
+<text x="1345" y="832" fill="#c5b7d9" font-size="20" text-anchor="end">CONCEPT ILLUSTRATION</text>
+</g></svg>

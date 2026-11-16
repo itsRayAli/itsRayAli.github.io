@@ -281,6 +281,10 @@
     "NSIS": [
       "NS",
       "#6495ed"
+    ],
+    "IndexedDB": [
+      "IDB",
+      "#8060b6"
     ]
   },
   "stackOverview": [
